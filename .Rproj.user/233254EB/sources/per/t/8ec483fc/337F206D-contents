@@ -1,0 +1,244 @@
+# Microarray analysis 24102017
+
+source("https://bioconductor.org/biocLite.R")
+biocLite("nugohs1a520180.db")
+library(affy)
+library(oligo)
+library(limma)
+library(affyio)
+library(dplyr)
+library(data.table)
+library(nugohs1a520180.db)
+library(hgu133a.db)
+library(hgu133plus2.db)
+
+# Read in by sample type
+
+f <- list.celfiles(path="./data.downloads")
+f<-paste("./data.downloads/",f,sep = "")
+f<-data.frame(sapply(f, function(x) read.celfile.header(x)$cdfName),stringsAsFactors = F)
+f$File_name<-rownames(f)
+names(f)<-c("Platform","File_name")
+f<-f%>%
+  group_by(Platform)%>%
+  mutate(Frequency = length(File_name))
+f<-f[f$Frequency>1&f$Platform!="Hs35b_P01R_v01"&f$Platform!="HT_HG-U133B"&f$Platform!="HuGene-1_1-st-v1",]
+setwd(paste(getwd(),"/data.downloads",sep = ""))
+file_infos<-file.info(list.celfiles())
+setwd(gsub(pattern = "/data.downloads",replacement = "",getwd()))
+file_infos$File_name<-rownames(file_infos)
+file_infos<-file_infos[,c("File_name","size")]
+file_infos$File_name<-paste("./data.downloads/",file_infos$File_name,sep = "")
+file_infos<-merge(f,file_infos,by="File_name",all=F)
+
+eset<-list()
+for(i in 1:length(unique(file_infos$Platform))){
+  eset[[i]]<-read.celfiles(file_infos[file_infos$Platform==unique(file_infos$Platform)[i],"File_name"])
+}
+
+affyRaw<-list()
+for(i in 1:length(eset)){
+  affyRaw[[i]]<-rma(eset[[i]])
+}
+
+rm(eset)
+
+data<-list()
+for(i in 1:length(affyRaw)){
+  data[[i]]<-data.frame(exprs(affyRaw[[i]]),check.names = F)
+}
+
+rm(affyRaw)
+
+huex10<-fread("./Microarray_annotations/HuEx-1_0-st-v2.na36.hg19.transcript.csv")
+hugene10<-fread("./Microarray_annotations/HuGene-1_0-st-v1.na36.hg19.transcript.csv")
+hugene20<-fread("./Microarray_annotations/HuGene-2_0-st-v1.na36.hg19.transcript.csv")
+
+#Collapse Affymetrix probe IDs to Gene Symbols
+# hugene10
+data[[1]]<-merge(data[[1]],hugene10[,c("transcript_cluster_id","gene_assignment")], by.x=0,by.y="transcript_cluster_id", all=F)
+data[[1]]<-data[[1]][data[[1]]$gene_assignment!="---",]
+
+transform_annot<-function(x,indx){
+  x<-strsplit(as.character(x[90]), split="//")[[1]][indx]
+  return(x)
+}
+
+data[[1]]$NCBI_ID<-apply(data[[1]],1,transform_annot,indx=1)
+data[[1]]$Gene_name<-apply(data[[1]],1,transform_annot,indx=2)
+data[[1]]$DESC<-apply(data[[1]],1,transform_annot,indx=3)
+
+if(!dir.exists("Preprocessed_data")){
+  dir.create("Preprocessed_data")
+}
+
+write.table(data[[1]],"Preprocessed_data/hugene10_array_data.txt",sep = "\t")
+
+# huex10
+data[[2]]<-merge(data[[2]],huex10[,c("transcript_cluster_id","gene_assignment")], by.x=0,by.y="transcript_cluster_id", all=F)
+data[[2]]<-data[[2]][data[[2]]$gene_assignment!="---",]
+
+transform_annot<-function(x,indx){
+  x<-strsplit(as.character(x[20]), split="//")[[1]][indx]
+  return(x)
+}
+
+data[[2]]$NCBI_ID<-apply(data[[2]],1,transform_annot,indx=1)
+data[[2]]$Gene_name<-apply(data[[2]],1,transform_annot,indx=2)
+data[[2]]$DESC<-apply(data[[2]],1,transform_annot,indx=3)
+
+write.table(data[[2]],"Preprocessed_data/huex10_array_data.txt",sep = "\t")
+
+#hgu133plus2
+
+library(hgu133plus2.db)
+
+Annot <- data.frame(ACCNUM=sapply(contents(hgu133plus2ACCNUM), paste, collapse=", "),
+                    SYMBOL=sapply(contents(hgu133plus2SYMBOL), paste, collapse=", "))
+
+data[[3]] <- merge(Annot, data[[3]], by=0, all=F)
+
+write.table(data[[3]],"Preprocessed_data/hgu133plus2_array_data.txt",sep = "\t")
+
+# NuGO_Hs1a520180
+
+library(nugohs1a520180.db)
+
+Annot <- data.frame(ACCNUM=sapply(contents(nugohs1a520180ACCNUM), paste, collapse=", "),
+                    SYMBOL=sapply(contents(nugohs1a520180SYMBOL), paste, collapse=", "))
+
+data[[4]] <- merge(Annot, data[[4]], by=0, all=F)
+
+write.table(data[[4]],"Preprocessed_data/nugohs1a520180_array_data.txt",sep = "\t")
+
+# hgu219
+
+library(hgu219.db)
+Annot <- data.frame(ACCNUM=sapply(contents(hgu219ACCNUM), paste, collapse=", "),
+                    SYMBOL=sapply(contents(hgu219SYMBOL), paste, collapse=", "))
+data[[5]] <- merge(Annot, data[[5]], by.x=0, by.y=0, all=T)
+
+write.table(data[[5]],"Preprocessed_data/hgu219_array_data.txt",sep = "\t")
+
+# hugene20
+
+data[[6]]<-merge(data[[6]],hugene20[,c("transcript_cluster_id","gene_assignment")], by.x=0,by.y="transcript_cluster_id", all=F)
+data[[6]]<-data[[6]][data[[6]]$gene_assignment!="---",]
+
+transform_annot<-function(x,indx){
+  x<-strsplit(as.character(x[11]), split="//")[[1]][indx]
+  return(x)
+}
+
+data[[6]]$NCBI_ID<-apply(data[[6]],1,transform_annot,indx=1)
+data[[6]]$Gene_name<-apply(data[[6]],1,transform_annot,indx=2)
+data[[6]]$DESC<-apply(data[[6]],1,transform_annot,indx=3)
+
+write.table(data[[6]],"Preprocessed_data/hugene20_array_data.txt",sep = "\t")
+
+# hgu133a
+
+library(hgu133a.db)
+
+Annot <- data.frame(ACCNUM=sapply(contents(hgu133aACCNUM), paste, collapse=", "),
+                    SYMBOL=sapply(contents(hgu133aSYMBOL), paste, collapse=", "))
+data[[7]] <- merge(Annot, data[[7]], by=0, all=F)
+
+write.table(data[[7]],"Preprocessed_data/hgu133a_array_data.txt",sep = "\t")
+
+
+data[[1]]<-data[[1]][,-c(1,90,91,93)]
+data[[2]]<-data[[2]][,-c(1,20,21,23)]
+data[[3]]<-data[[3]][,-c(1,2)]
+data[[4]]<-data[[4]][,-c(1,2)]
+data[[5]]<-data[[5]][,-c(1,2)]
+data[[6]]<-data[[6]][,-c(1,11,12,14)]
+data[[7]]<-data[[7]][,-c(1,2)]
+
+#Collapse probes to genes by means of geometric mean
+
+gm_mean<-function(x, na.rm=TRUE){
+  x<-as.numeric(x)
+  exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+}
+
+data[[1]]<-aggregate(.~Gene_name,data=data[[1]],FUN=gm_mean,na.rm=T)
+data[[2]]<-aggregate(.~Gene_name,data=data[[2]],FUN=gm_mean,na.rm=T)
+data[[3]]<-aggregate(.~SYMBOL,data=data[[3]],FUN=gm_mean,na.rm=T)
+data[[4]]<-aggregate(.~SYMBOL,data=data[[4]],FUN=gm_mean,na.rm=T)
+data[[5]]<-aggregate(.~SYMBOL,data=data[[5]],FUN=gm_mean,na.rm=T)
+data[[6]]<-aggregate(.~Gene_name,data=data[[6]],FUN=gm_mean,na.rm=T)
+data[[7]]<-aggregate(.~SYMBOL,data=data[[7]],FUN=gm_mean,na.rm=T)
+
+rownames(data[[1]])<-data[[1]]$Gene_name
+rownames(data[[2]])<-data[[2]]$Gene_name
+rownames(data[[3]])<-data[[3]]$SYMBOL
+rownames(data[[4]])<-data[[4]]$SYMBOL
+rownames(data[[5]])<-data[[5]]$SYMBOL
+rownames(data[[6]])<-data[[6]]$Gene_name
+rownames(data[[7]])<-data[[7]]$SYMBOL
+
+data[[1]]$Gene_name<-NULL
+data[[2]]$Gene_name<-NULL
+data[[3]]$SYMBOL<-NULL
+data[[4]]$SYMBOL<-NULL
+data[[5]]$SYMBOL<-NULL
+data[[6]]$Gene_name<-NULL
+data[[7]]$SYMBOL<-NULL
+
+rownames(data[[1]])<-trimws(rownames(data[[1]]))
+rownames(data[[2]])<-trimws(rownames(data[[2]]))
+rownames(data[[3]])<-trimws(rownames(data[[3]]))
+rownames(data[[4]])<-trimws(rownames(data[[4]]))
+rownames(data[[5]])<-trimws(rownames(data[[5]]))
+rownames(data[[6]])<-trimws(rownames(data[[6]]))
+rownames(data[[7]])<-trimws(rownames(data[[7]]))
+
+# Decide on which data to keep
+
+sum(rownames(data[[2]])%in%rownames(data[[1]]))
+sum(rownames(data[[2]])%in%rownames(data[[3]]))
+sum(rownames(data[[2]])%in%rownames(data[[4]]))
+sum(rownames(data[[2]])%in%rownames(data[[5]]))
+sum(rownames(data[[2]])%in%rownames(data[[6]]))
+
+# Remove data[[7]]
+
+data_merged<-merge(data[[1]],data[[2]],by=0,all=F)
+rownames(data_merged)<-data_merged$Row.names
+data_merged$Row.names<-NULL
+data_merged<-merge(data_merged,data[[3]],by=0,all=F)
+rownames(data_merged)<-data_merged$Row.names
+data_merged$Row.names<-NULL
+data_merged<-merge(data_merged,data[[4]],by=0,all=F)
+rownames(data_merged)<-data_merged$Row.names
+data_merged$Row.names<-NULL
+data_merged<-merge(data_merged,data[[5]],by=0,all=F)
+rownames(data_merged)<-data_merged$Row.names
+data_merged$Row.names<-NULL
+data_merged<-merge(data_merged,data[[6]],by=0,all=F)
+rownames(data_merged)<-data_merged$Row.names
+data_merged$Row.names<-NULL
+
+data<-data_merged
+rm(data_merged)
+
+# Normalise between platforms and experiments
+
+data<-normalizeQuantiles(data)
+write.table(data,"Preprocessed_data/Raw_full_gene_expression.txt",sep = "\t")
+
+#Load sample-to-filename annotation file.
+relation<-read.table("Preprocessed_data/Filtered_samples.txt",sep="\t",stringsAsFactors=F, header = T)
+relation<-relation[!duplicated(relation$File_name),]
+rownames(relation)<-relation$File_name
+
+names(data)<-as.character(relation[names(data),"Cell_type"])
+
+
+
+
+write.table(data, "Preprocessed_data/Full_annotated_gene_expression.txt",sep = "\t")
+
+
+

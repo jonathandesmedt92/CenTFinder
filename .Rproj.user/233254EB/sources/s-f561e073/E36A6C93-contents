@@ -1,0 +1,844 @@
+# WGCNA pipeline
+
+#source("https://bioconductor.org/biocLite.R")
+#biocLite(c("WGCNA",
+#           "flashClust",
+#           "gplots",
+#           "AnnotationDbi",
+#           "org.Hs.eg.db",
+#           "org.Mm.eg.db",
+#           "biomaRt",
+#           "topGO",
+#           "RColorBrewer",
+#           "dplyr"))
+
+require(WGCNA)
+require(flashClust)
+require(gplots)
+require(AnnotationDbi)
+require(org.Hs.eg.db)
+require(org.Mm.eg.db)
+require(biomaRt)
+require(topGO) 
+require(RColorBrewer)
+require(dplyr)
+require(ggplot2)
+require(Rtsne)
+require(tidyr)
+
+
+# Read in the data
+
+data<-read.table("Preprocessed_data/Full_gene_expression_matrix.txt",sep = "\t",stringsAsFactors = F, header = T,check.names = F,fill=T)
+
+# Read in the human transcription factors
+
+humantfs<-read.table("Preprocessed_data/allhumantfs.txt",sep = "\t",header = T, stringsAsFactors = F)
+
+# filter genes
+
+phh<-c("PHH.1","PHH.2","PHH.3")
+phh<-which(names(data)%in%phh)
+hlc<-grep("HLC",names(data))
+
+# sd of 0.2551 indicates that 95% of the data is between 1CT range
+# sd of 0.5102 indicates that 95% of the data is between 2CT range
+
+filter_genes<-function(data, tfs=humantfs){
+  data$ranges<-apply(data,1,FUN = function(x){max(x)-min(x)})
+  data.notfs<-data[!rownames(data)%in%tfs$Symbol,]
+  data.tfs<-data[tfs$Symbol,]
+  data.tfs<-data.tfs[data.tfs$ranges>1,]
+  data.notfs<-data.notfs[data.notfs$ranges>2,]
+  data<-data.frame(rbind(data.tfs,data.notfs),stringsAsFactors = F)
+  data<-data[complete.cases(data),-ncol(data)]
+  return(data)
+}
+
+data<-filter_genes(data)
+
+sample_annot<-data.frame(cbind(names(data)[order(names(data))],c(rep("HLC",42),rep("Fresh PHH",3),rep("Plated PHH",41))),stringsAsFactors = F)
+names(sample_annot)<-c("Sample","Group")
+
+# WGCNA
+
+dev.off()
+perform_WGCNA<-function(data,
+                        type="signed",
+                        species="Homo sapiens",
+                        tfs=humantfs,
+                        GO=T, 
+                        edges=5000,
+                        sample_annotation=sample_annot,
+                        tfnumber=10000,
+                        weighted=T,
+                        overwrite=F,
+                        samples_markers,
+                        legends){
+  # Step1: Data exploration
+  if(!dir.exists("./Plots")){
+    dir.create("./Plots")
+  } else {
+    if(overwrite){
+      unlink("Plots", recursive = TRUE)
+      dir.create("./Plots")
+    }
+  }
+  if(!dir.exists("./Preprocessed_data")){
+    dir.create("./Preprocessed_data")
+  } else {
+    if(overwrite){
+      unlink("Preprocessed_data", recursive = TRUE)
+      dir.create("./Preprocessed_data")
+    }
+  }
+  # Create a heatmap
+  pdf("./Plots/Heatmap_all.pdf") 
+  print(heatmap.2(as.matrix(data),scale="row", trace="none", labRow = NULL, main= "Heatmap", margins = ))
+  dev.off()
+  
+  # Create a PCA plot
+  pcadata<-prcomp(t(data), scale. = T)
+  dat.sum<-summary(pcadata)
+  dat<-as.data.frame(pcadata$x)
+  pdf("./Plots/PCA_all.pdf") 
+  print(ggplot(data = dat, aes(x = PC1, y = PC2, label = rownames(dat))) +
+          geom_point()+
+          geom_hline(yintercept = 0, colour = "gray65") +
+          geom_vline(xintercept = 0, colour = "gray65")+
+          geom_text(colour = "black", alpha = 0.8, size = 2, nudge_x = 10)+
+          xlab(paste("PC1",round(dat.sum$importance["Proportion of Variance",1]*100,2),"%",sep=", "))+
+          ylab(paste("PC2",round(dat.sum$importance["Proportion of Variance",2]*100,2),"%",sep=", "))+
+          theme(text = element_text(size=20),
+                axis.text.x = element_text(angle=0, hjust=1))+
+          ggtitle("PCA plot"))
+  dev.off()
+  
+  # Create a tSNE plot
+  set.seed(24041992)
+  tsne_res<-Rtsne(as.matrix(t(data)), perplexity = floor(ncol(data)/3)-1, check_duplicates = F)
+  tsne_plot <- data.frame(x = tsne_res$Y[,1], y = tsne_res$Y[,2], lab = names(data))
+  
+  tsne_plot<-merge(tsne_plot,sample_annotation,by.x="lab",by.y="Sample",all=F)
+  
+  varx<-var(tsne_plot$x)
+  vary<-var(tsne_plot$y)
+  pervarx<-paste("Percentage variation: ",round(varx/(varx+vary)*100,2),"%",sep = "")
+  pervary<-paste("Percentage variation: ",round(vary/(varx+vary)*100,2),"%",sep = "")
+  
+  
+  set.seed(24041992)
+  tsne_res<-Rtsne(as.matrix(t(data)), perplexity = floor(ncol(data)/3)-1, check_duplicates = F)
+  tsne_plot <- data.frame(x = tsne_res$Y[,1], y = tsne_res$Y[,2], lab = names(data))
+  
+  tsne_plot<-merge(tsne_plot,sample_annotation,by.x="lab",by.y="Sample",all=F)
+  
+  varx<-var(tsne_plot$x)
+  vary<-var(tsne_plot$y)
+  pervarx<-paste("Percentage variation: ",round(varx/(varx+vary)*100,2),"%",sep = "")
+  pervary<-paste("Percentage variation: ",round(vary/(varx+vary)*100,2),"%",sep = "")
+  
+  
+  
+  if(legends=="all"){
+    pdf("./Plots/tSNE_all.pdf") 
+    print(ggplot(tsne_plot, aes(x=x, y=y, col=Group))+
+            geom_point(size=3)+
+            xlab(pervarx)+
+            ylab(pervary)+
+            theme(text = element_text(size=10),
+                  axis.text.x = element_text(angle=0, hjust=1))+
+            labs(col = "Cell type")+
+            ggtitle("tSNE plot"))
+    dev.off()
+  } 
+  if(legends=="centered"){
+    centers<-tsne_plot[,c("x","y","Group")]
+    centers<-centers%>%
+      group_by(Group)%>%
+      summarise(x = mean(x),
+                y = mean(y))
+    pdf("./Plots/tSNE_all.pdf") 
+    print(ggplot(tsne_plot, aes(x=x, y=y, col=Group))+
+            geom_point(size=3)+
+            xlab(pervarx)+
+            ylab(pervary)+
+            theme(text = element_text(size=10),
+                  axis.text.x = element_text(angle=0, hjust=1))+
+            labs(col = "Cell type")+
+            ggtitle("tSNE plot")+
+            theme(legend.position="none")+
+            annotate("text", x = centers$x, y = centers$y, label = centers$Group))
+    dev.off()
+  } 
+  if(legends!="centered"&legends!="all"){
+    centers<-tsne_plot[,c("x","y","Group")]
+    centers<-centers%>%
+      group_by(Group)%>%
+      summarise(x = mean(x),
+                y = mean(y))
+    centers<-centers[centers$Group%in%legends,]
+    pdf("./Plots/tSNE_all.pdf") 
+    print(ggplot(tsne_plot, aes(x=x, y=y, col=Group))+
+            geom_point(size=3)+
+            xlab(pervarx)+
+            ylab(pervary)+
+            theme(text = element_text(size=10),
+                  axis.text.x = element_text(angle=0, hjust=1))+
+            labs(col = "Cell type")+
+            ggtitle("tSNE plot")+
+            theme(legend.position="none")+
+            annotate("text", x = centers$x, y = centers$y, label = centers$Group))
+    dev.off()
+  } 
+  
+  
+  write.table(tsne_plot,file="Preprocessed_data/tSNE_all_annot.txt",sep = "\t")
+  
+  # Step2: Define adjacency and dissimilarity matrices
+  message("1] Defining adjacency and dissimilarity matrices...")
+  data<-data.frame(t(data),stringsAsFactors = F)
+  
+  powers=1:30
+  sft <- pickSoftThreshold(data, powerVector = powers, verbose = 5,networkType = type)
+  
+  
+  pdf("Plots/Scale_independence.pdf")
+  print(ggplot(sft$fitIndices,aes(x=Power,y=-sign(slope)*SFT.R.sq))+
+          geom_text(aes(label=Power))+
+          theme_bw()+
+          xlab("Soft Treshold (power)")+
+          ylab("Scale Free Topology Model Fit,signed R^2")+
+          ggtitle("Scale independence")+
+          geom_hline(yintercept = 0.9, col="red"))
+  dev.off() 
+  
+  pdf("Plots/Mean_connectivity.pdf")
+  print(ggplot(sft$fitIndices,aes(x=Power,y=mean.k.))+
+          geom_text(aes(label=Power))+
+          theme_bw()+
+          xlab("Soft Treshold (power)")+
+          ylab("Mean Connectivity")+
+          ggtitle("Mean connectivity"))
+  dev.off()
+  
+  if(is.na(sft$powerEstimate)){
+    power<-sft$fitIndices[sft$fitIndices$SFT.R.sq==max(sft$fitIndices$SFT.R.sq[sft$fitIndices$slope<0]),"Power"]
+  } else {
+    power<-sft$powerEstimate
+  }
+  
+  A <- adjacency(data, power = power, type = type)
+  dissTOM <- TOMdist(A, TOMType = type)
+  # Step3: Hierarchichal clustering
+  message("2] Performing hierarchical clustering...")
+  
+  geneTree <-flashClust(as.dist(dissTOM), method = "average")
+  par(cex = 0.6);
+  par(mar = c(0,4,2,0))
+  pdf("./Plots/geneclusters.pdf") 
+  print(plot(geneTree, main = "Gene clustering", sub="", xlab="", cex.lab = 1.5, 
+             cex.axis = 1.5, cex.main = 2))
+  dev.off()
+  # Step4: Define modules by cutting branches
+  message("3] Cutting branches...")
+  moduleLabelsManual <- cutreeDynamic(dendro = geneTree, distM = dissTOM, method = "hybrid", 
+                                      deepSplit = 2, pamRespectsDendro = F, minClusterSize = 30)
+  moduleCOlorsManual <- labels2colors(moduleLabelsManual)
+  pdf("./Plots/DendroandColors.pdf")
+  print(plotDendroAndColors(geneTree, moduleCOlorsManual,
+                            "Module colors",
+                            dendroLabels = FALSE, hang = 0.03,
+                            addGuide = TRUE, guideHang = 0.05))
+  dev.off()
+  # Get genes associated with each subcluster
+  gene_cluster_annot<-data.frame(cbind(names(data),moduleCOlorsManual),stringsAsFactors = F)
+  names(gene_cluster_annot)<-c("Gene","Subcluster color")
+  # Automatically merge highly correlated modules (default=0.2)
+  merge<-mergeCloseModules(data,moduleCOlorsManual, cutHeight = 0.2)
+  moduleCOlorsManual2<-merge$colors
+  
+  pdf("./Plots/Clusterdendrogram.pdf",width=6,height=4,paper='special') 
+  print(plotDendroAndColors(geneTree, moduleCOlorsManual2,
+                            "Module colors",
+                            dendroLabels = FALSE, hang = 0.03,
+                            addGuide = TRUE, guideHang = 0.05))
+  dev.off()
+  
+  # Plots
+  softcon<-softConnectivity(data,power = power,type=type)
+  dev.off()
+  pdf("Plots/Scale_free_topology.pdf")
+  scaleFreePlot(softcon)
+  dev.off()
+  
+  
+  # Get genes associated with each cluster
+  gene_cluster_annot$cl<-moduleCOlorsManual2
+  names(gene_cluster_annot)<-c("Gene","Subcluster color","Cluster color")
+  write.table(gene_cluster_annot,"Preprocessed_data/Gene_cluster_annotation.txt",sep = "\t")
+  Cluster_colors<-unique(moduleCOlorsManual2)
+  
+  if(GO){
+    if(!dir.exists("./GO")){
+      dir.create("./GO")
+    } else {
+      if(overwrite){
+        unlink("GO", recursive = TRUE)
+        dir.create("./GO")
+      }
+    }
+    
+    # Step5: Perform GO analysis
+    message("4] Performing Gene Ontology enrichment analysis...")
+    first <- function(x){x[[1]]}
+    universe <- as.character(AnnotationDbi::mapIds(org.Hs.eg.db, keys=as.character(names(data)), column="ENSEMBL", keytype = "SYMBOL", multiVals = first))
+    
+    BPresult<-list()
+    
+    getGO2<-function(geneset,universe,species=c("Homo sapiens","Mus musculus")){
+      all_genes<-append(rep(0,length(geneset)),rep(1,length(universe)))
+      names(all_genes)<-append(geneset,universe[!universe%in%geneset])
+      GOBPdata <- new("topGOdata", ontology = "BP", allGenes = all_genes, geneSel = function(p) p == 0, description = "Test", annot = annFUN.org, mapping=if(species=="Homo sapiens"){"org.Hs.eg.db"} else {if(species=="Mus musculus"){"org.Mm.eg.db"}}, ID="Ensembl")
+      GOCCdata <- new("topGOdata", ontology = "CC", allGenes = all_genes, geneSel = function(p) p == 0, description = "Test", annot = annFUN.org, mapping=if(species=="Homo sapiens"){"org.Hs.eg.db"} else {if(species=="Mus musculus"){"org.Mm.eg.db"}}, ID="Ensembl")
+      GOMFdata <- new("topGOdata", ontology = "MF", allGenes = all_genes, geneSel = function(p) p == 0, description = "Test", annot = annFUN.org, mapping=if(species=="Homo sapiens"){"org.Hs.eg.db"} else {if(species=="Mus musculus"){"org.Mm.eg.db"}}, ID="Ensembl")
+      
+      resultFisherBP <- runTest(GOBPdata, algorithm = "classic", statistic = "fisher")
+      resultFisherCC <- runTest(GOCCdata, algorithm = "classic", statistic = "fisher")
+      resultFisherMF <- runTest(GOMFdata, algorithm = "classic", statistic = "fisher")
+      
+      BP<-data.frame(GenTable(GOBPdata, classicFisher = resultFisherBP, topNodes = 15, numChar=100),stringsAsFactors = F)
+      CC<-data.frame(GenTable(GOCCdata, classicFisher = resultFisherCC, topNodes = 15, numChar=100),stringsAsFactors = F)
+      MF<-data.frame(GenTable(GOMFdata, classicFisher = resultFisherMF, topNodes = 15, numChar=100),stringsAsFactors = F)
+      res<-list(BP,CC,MF)
+      names(res)<-c("BP","CC","MF")
+      return(res)
+    }
+    for(i in 1:length(Cluster_colors)){
+      if(species=="Homo sapiens"){
+        ensemblgeneenrichmentset<-as.character(AnnotationDbi::mapIds(org.Hs.eg.db, keys=names(data)[moduleCOlorsManual2==Cluster_colors[i]], column="ENSEMBL", keytype = "SYMBOL", multiVals = first))
+      }
+      if(species=="Mus musculus"){
+        ensemblgeneenrichmentset<-as.character(AnnotationDbi::mapIds(org.Mm.eg.db, keys=names(data)[moduleCOlorsManual2==Cluster_colors[i]], column="ENSEMBL", keytype = "SYMBOL", multiVals = first))
+      }
+      
+      BPresult[[i]]<-getGO2(geneset =  ensemblgeneenrichmentset,
+                            universe = universe,
+                            species = species)
+      write.table(BPresult[[i]]$BP,file = paste("./GO/GOBP_",Cluster_colors[i],".txt",sep = ""),sep = "\t")
+      write.table(BPresult[[i]]$CC,file = paste("./GO/GOCC_",Cluster_colors[i],".txt",sep = ""),sep = "\t")
+      write.table(BPresult[[i]]$MF,file = paste("./GO/GOMF_",Cluster_colors[i],".txt",sep = ""),sep = "\t")
+      
+      names(BPresult)[i]<-Cluster_colors[i]
+    }
+  }
+  # Step 6: Perform KEGG enrichment
+  
+  getKEGG<-function(geneset,geneset_IDtype, species){
+    if(species=="human"){organism="hsa"}
+    if(species=="mouse"){organism="mmu"}
+    require(clusterProfiler)
+    first<-function(x){x[[1]]}
+    
+    geneset<-as.character(mapIds(if(species=="human"){org.Hs.eg.db}else{if(species=="mouse"){org.Mm.eg.db}},
+                                 keys = geneset,
+                                 column = "ENTREZID",
+                                 keytype = geneset_IDtype,
+                                 multiVals = first))
+    kk<-enrichKEGG(gene = geneset,
+                   organism = organism,
+                   pvalueCutoff = 0.05)
+    res<-head(kk,100)
+    return(res)
+  }
+  library(clusterProfiler)
+  
+  if(!dir.exists("./KEGG")){
+    dir.create("./KEGG")
+  } else {
+    if(overwrite){
+      unlink("KEGG", recursive = TRUE)
+      dir.create("./KEGG")
+    }
+  }
+  for(i in 1:length(Cluster_colors)){
+    if(species=="Homo sapiens"){
+      ensemblgeneenrichmentset<-as.character(AnnotationDbi::mapIds(org.Hs.eg.db, keys=names(data)[moduleCOlorsManual2==Cluster_colors[i]], column="ENSEMBL", keytype = "SYMBOL", multiVals = first))
+      KEGG<-getKEGG(geneset=ensemblgeneenrichmentset,
+                    geneset_IDtype = "ENSEMBL",
+                    species = "human")
+    }
+    if(species=="Mus musculus"){
+      ensemblgeneenrichmentset<-as.character(AnnotationDbi::mapIds(org.Mm.eg.db, keys=names(data)[moduleCOlorsManual2==Cluster_colors[i]], column="ENSEMBL", keytype = "SYMBOL", multiVals = first))
+      KEGG<-getKEGG(geneset=ensemblgeneenrichmentset,
+                    geneset_IDtype = "ENSEMBL",
+                    species = "mouse")
+    }
+    
+    write.table(KEGG,file = paste("./KEGG/KEGG_",Cluster_colors[i],".txt",sep = ""),sep = "\t")
+  }
+  
+  # Make plots per cluster
+  message("5] Creating data plots for each cluster...")
+  names(gene_cluster_annot)<-c("Gene","Subcluster color","Cluster color")
+  
+  for(i in 1:length(unique(gene_cluster_annot$`Cluster color`))){
+    subdata<-data.frame(t(data),stringsAsFactors = F)
+    subdata<-subdata[as.character(gene_cluster_annot[gene_cluster_annot$`Cluster color`==unique(gene_cluster_annot$`Cluster color`)[i],"Gene"]),]
+    # Create a heatmap
+    pdf(paste("./Plots/Heatmap_",unique(gene_cluster_annot$`Cluster color`)[i],".pdf",sep = "")) 
+    heatmap.2(as.matrix(subdata),scale="column", trace="none", labRow = NULL, main= "Heatmap")
+    dev.off()
+    
+    # Create a PCA plot
+    pcadata<-prcomp(t(subdata), scale. = T)
+    dat.sum<-summary(pcadata)
+    dat<-as.data.frame(pcadata$x)
+    pdf(paste("./Plots/PCA_",unique(gene_cluster_annot$`Cluster color`)[i],".pdf",sep = ""),width=6,height=4,paper='special') 
+    print(ggplot(data = dat, aes(x = PC1, y = PC2, label = rownames(dat)))+
+            geom_point()+
+            geom_hline(yintercept = 0, colour = "gray65") +
+            geom_vline(xintercept = 0, colour = "gray65")+
+            geom_text(colour = "black", alpha = 0.8, size = 2, nudge_x = 10)+
+            xlab(paste("PC1",round(dat.sum$importance["Proportion of Variance",1]*100,2),"%",sep=", "))+
+            ylab(paste("PC2",round(dat.sum$importance["Proportion of Variance",2]*100,2),"%",sep=", "))+
+            theme(text = element_text(size=20),
+                  axis.text.x = element_text(angle=0, hjust=1))+
+            ggtitle("PCA plot"))
+    dev.off()
+    
+    # Create a tSNE plot
+    set.seed(24041992)
+    tsne_res<-Rtsne(as.matrix(t(subdata)), perplexity = floor(ncol(subdata)/3)-1, check_duplicates = F)
+    tsne_plot <- data.frame(x = tsne_res$Y[,1], y = tsne_res$Y[,2], lab = names(subdata))
+    sample_annotation$Sample<-gsub(pattern = " ",replacement = ".",x=sample_annotation$Sample) 
+    tsne_plot<-merge(tsne_plot,sample_annotation,by.x="lab",by.y="Sample",all=F)
+    
+    varx<-var(tsne_plot$x)
+    vary<-var(tsne_plot$y)
+    pervarx<-paste("Percentage variation: ",round(varx/(varx+vary)*100,2),"%",sep = "")
+    pervary<-paste("Percentage variation: ",round(vary/(varx+vary)*100,2),"%",sep = "")
+    
+    if(legends=="all"){
+      pdf(paste("./Plots/tSNE_",unique(gene_cluster_annot$`Cluster color`)[i],".pdf")) 
+      print(ggplot(tsne_plot, aes(x=x, y=y, col=Group))+
+              geom_point(size=3)+
+              xlab(pervarx)+
+              ylab(pervary)+
+              theme(text = element_text(size=10),
+                    axis.text.x = element_text(angle=0, hjust=1))+
+              labs(col = "Cell type")+
+              ggtitle("tSNE plot"))
+      dev.off()
+    } 
+    if(legends=="centered"){
+      centers<-tsne_plot[,c("x","y","Group")]
+      centers<-centers%>%
+        group_by(Group)%>%
+        summarise(x = mean(x),
+                  y = mean(y))
+      pdf(paste("./Plots/tSNE_",unique(gene_cluster_annot$`Cluster color`)[i],".pdf")) 
+      print(ggplot(tsne_plot, aes(x=x, y=y, col=Group))+
+              geom_point(size=3)+
+              xlab(pervarx)+
+              ylab(pervary)+
+              theme(text = element_text(size=10),
+                    axis.text.x = element_text(angle=0, hjust=1))+
+              labs(col = "Cell type")+
+              ggtitle("tSNE plot")+
+              theme(legend.position="none")+
+              annotate("text", x = centers$x, y = centers$y, label = centers$Group))
+      dev.off()
+    } 
+    if(legends!="centered"&legends!="all"){
+      centers<-tsne_plot[,c("x","y","Group")]
+      centers<-centers%>%
+        group_by(Group)%>%
+        summarise(x = mean(x),
+                  y = mean(y))
+      centers<-centers[centers$Group%in%legends,]
+      pdf(paste("./Plots/tSNE_",unique(gene_cluster_annot$`Cluster color`)[i],".pdf")) 
+      print(ggplot(tsne_plot, aes(x=x, y=y, col=Group))+
+              geom_point(size=3)+
+              xlab(pervarx)+
+              ylab(pervary)+
+              theme(text = element_text(size=10),
+                    axis.text.x = element_text(angle=0, hjust=1))+
+              labs(col = "Cell type")+
+              ggtitle("tSNE plot")+
+              theme(legend.position="none")+
+              annotate("text", x = centers$x, y = centers$y, label = centers$Group))
+      dev.off()
+    } 
+    write.table(tsne_plot,file=paste("Preprocessed_data/tSNE_",unique(gene_cluster_annot$`Cluster color`)[i],".txt",sep = ""),sep = "\t")
+  }
+  
+  # Step 7: Establish module-trait relationships
+  message("6] Establishing module-trait relationships...")
+  traits<-list()
+  for(i in 1:length(unique(gene_cluster_annot$`Cluster color`))){
+    traits[[i]]<-as.character(gene_cluster_annot[gene_cluster_annot$`Cluster color`==unique(gene_cluster_annot$`Cluster color`)[i],"Gene"])
+  }
+  names(traits)<-unique(gene_cluster_annot$`Cluster color`)
+  
+  genes<-unlist(traits)
+  datTraits<-data[,genes]
+  datTraits<-data.frame(datTraits,stringsAsFactors = F)
+  
+  summarise_traits<-function(datTraits,traits){
+    res<-list()
+    for(i in 1:length(traits)){
+      res[[i]]<-rowSums(datTraits[,traits[[i]]])/length(traits[[i]])
+    }
+    res<-as.data.frame(res, stringsAsFactors = F)
+    names(res)<-names(traits)
+    return(res)
+  }
+  datTraits<-summarise_traits(datTraits,traits)
+  datTraits<-datTraits[,names(traits)]
+  
+  # Define numbers of genes and samples
+  nGenes = ncol(data)
+  nSamples = nrow(data)
+  # Recalculate MEs with color labels
+  MElist <- moduleEigengenes(data, colors = moduleCOlorsManual2,nPC = 6)
+  varexp<-MElist$varExplained
+  names(varexp)<-gsub("ME","",names(MElist$eigengenes))
+  varexp$PC<-rownames(varexp)
+  varexp<-gather(varexp, key = "Module", value = "Explained_variance",1:(length(names(varexp))-1))
+  write.table(varexp,"Preprocessed_data/Explained_variances.txt",sep = "\t")
+  pdf("Plots/Explained_variance.pdf")
+  print(ggplot(varexp, aes(x = PC, y=Explained_variance*100, group = Module))+
+          geom_point()+
+          geom_line(aes(col=Module))+
+          theme_bw()+
+          xlab("Principal component")+
+          ylab("Explained variance (in %)"))
+  dev.off()
+  MEs <- MElist$eigengenes
+  MEs = orderMEs(MEs)
+  moduleTraitCor = cor(MEs, datTraits, use = "p")
+  moduleTraitPvalue = corPvalueStudent(moduleTraitCor, nSamples)
+  
+  # Makes correlations between traits and gene expression data
+  sizeGrWindow(10,6)
+  # Will display correlations and their p-values
+  textMatrix =  paste(signif(moduleTraitCor, 2), "\n(",
+                      signif(moduleTraitPvalue, 1), ")", sep = "");
+  dim(textMatrix) = dim(moduleTraitCor)
+  par(mar = c(12, 8.5, 3, 3));
+  # Display the correlation values within a heatmap plot
+  pdf("./Plots/Module-trait_relationship.pdf")
+  print(labeledHeatmap(Matrix = moduleTraitCor,
+                       xLabels = names(datTraits),
+                       yLabels = names(MEs),
+                       ySymbols = names(MEs),
+                       colorLabels = FALSE,
+                       colors = greenWhiteRed(50),
+                       textMatrix = textMatrix,
+                       setStdMargins = FALSE,
+                       cex.text = 0.5,
+                       zlim = c(-1,1),
+                       main = paste("Module-trait relationships")))
+  dev.off()
+  
+  MECor = cor(MEs, MEs, use = "p");
+  moduleTraitPvalue = corPvalueStudent(MECor, nSamples);
+  
+  # Makes correlations between traits and gene expression data
+  sizeGrWindow(10,6)
+  # Will display correlations and their p-values
+  textMatrix =  paste(signif(MECor, 2), "\n(",
+                      signif(moduleTraitPvalue, 1), ")", sep = "");
+  dim(textMatrix) = dim(MECor)
+  par(mar = c(12, 8.5, 3, 3));
+  # Display the correlation values within a heatmap plot
+  pdf("./Plots/ME_correlations.pdf")
+  print(labeledHeatmap(Matrix = MECor,
+                       xLabels = names(MEs),
+                       yLabels = names(MEs),
+                       ySymbols = names(MEs),
+                       colorLabels = FALSE,
+                       colors = greenWhiteRed(50),
+                       textMatrix = textMatrix,
+                       setStdMargins = FALSE,
+                       cex.text = 0.5,
+                       zlim = c(-1,1),
+                       main = paste("ME correlations")))
+  dev.off()
+  
+  # Step 8: Identify hub genes by module membership
+  message("7] Ranking hub genes...")
+  phens<-as.list(datTraits)
+  names(phens)<-names(datTraits)
+  datKME <- signedKME(data,MEs)
+  write.table(datKME,"Preprocessed_data/datKME.txt",sep = "\t")
+  GS<-list()
+  for(i in 1:length(phens)){
+    GS[[i]]<-as.numeric(WGCNA::cor(data,phens[[i]], use = "p"))
+  }
+  names(GS)<-paste("GS.",names(phens),sep = "")
+  # Step 9: Plot GS vs MM
+  for(i in 1:length(phens)){
+    module=names(phens)[i]
+    colorOfColumn = substring(names(datKME),4)
+    selectModules=names(phens)
+    pdf(paste("./Plots/GS_vs_MM_",names(phens)[i],".pdf",sep = ""))
+    par(mfrow=c(ceiling(sqrt(length(unique(gene_cluster_annot$`Cluster color`)))),ceiling(sqrt(length(unique(gene_cluster_annot$`Cluster color`))))))
+    for(module in selectModules){
+      column=match(module,colorOfColumn)
+      restModule=moduleCOlorsManual2==module
+      print(verboseScatterplot(datKME[restModule,column], GS[[i]][restModule],
+                               xlab = paste("Module Membership",module,"module"),
+                               ylab = names(GS)[i],
+                               main = paste("kME",module,"vs. GS"),
+                               col = module))
+    }
+    dev.off()
+  }
+  colfunc <- colorRampPalette(c("white", "red"))
+  datTraits2<-datTraits
+  rownames(datTraits2)<-gsub(pattern = " ",replacement = ".",rownames(datTraits2))
+  sample_annotation<-data.frame(sample_annotation,stringsAsFactors = F)
+  sample_annotation$Sample<-gsub(pattern = " ",replacement = ".",sample_annotation$Sample)
+  rownames(sample_annotation)<-as.character(sample_annotation$Sample)
+  datTraits2$Group<-as.character(sample_annotation[rownames(datTraits2),"Group"])
+  datTraits3<-datTraits2%>%
+    group_by(Group)%>%
+    summarise_all(.funs = mean)
+  
+  datTraits3<-as.data.frame(datTraits3)
+  rownames(datTraits3)<-datTraits3$Group
+  datTraits3$Group<-NULL
+  write.table(datTraits3,"Preprocessed_data/celltype_vs_trait_raw.txt",sep="\t")
+  pdf("./Plots/Celltype_vs_trait_heatmap.pdf")
+  print(heatmap.2(as.matrix(datTraits3),col=colfunc(8),scale="column", trace="none", labRow = NULL,cexRow = 1,cexCol = 1,margins = c(10,14)))
+  dev.off()
+  # Step 10 : Identify hub genes by intramodular connectivity kME and export to cytoscape
+  message("8] Selecting number of transcription factors, applying cut-offs and exporting to a Cytoscape-input file...")
+  
+  if(!dir.exists("./CytoscapeInput")){
+    dir.create("./CytoscapeInput")
+  } else {
+    if(overwrite){
+      unlink("CytoscapeInput", recursive = TRUE)
+      dir.create("./CytoscapeInput")
+    }
+  }
+  export2Cytoscape<-function(TOM,annotation,speciestfs,modules,number_of_edges,threshold,name,...){
+    tfs2<-rownames(datKME[order(abs(datKME[,paste("kME",modules,sep = "")]),decreasing = T),])
+    tfs2<-tfs2[tfs2%in%speciestfs$Symbol]
+    tfs2<-tfs2[1:min(tfnumber,length(tfs2))]
+    genes_used<-as.character(annotation[annotation$`Cluster color`%in%modules,"Gene"])
+    TOM<-data.frame(TOM,stringsAsFactors = F)
+    names(TOM)<-rownames(datKME)
+    rownames(TOM)<-rownames(datKME)
+    TOM<-TOM[genes_used,genes_used]
+    res<-exportNetworkToCytoscape(adjMat = as.matrix(TOM),
+                                  weighted = weighted,
+                                  threshold = threshold,
+                                  nodeNames = genes_used)
+    res<-res$edgeData[res$edgeData$fromNode%in%tfs2|res$edgeData$toNode%in%tfs2,]
+    res<-data.frame(as.matrix(res),stringsAsFactors = F)
+    res2<-unique(unlist(append(res$fromNode,res$toNode)))
+    res2<-data.frame(res2,res2,stringsAsFactors = F)
+    names(res2)<-c("Gene1","Gene2")
+    write.table(res2,file = paste("./CytoscapeInput/Genes_only_",name,"-",modules,".txt",sep = ""),sep = "\t", quote = F,row.names = F)
+    res1<-res[order(res$weight,decreasing = T),][1:min(nrow(res),number_of_edges),]
+    write.table(res1,file = paste("./CytoscapeInput/",name,"-",modules,".txt",sep = ""),sep = "\t", quote = F,row.names = F)
+    return(res)
+  }
+  reslist<-list()
+  for(i in 1:length(unique(gene_cluster_annot$`Cluster color`))){
+    invisible(reslist[[i]]<-export2Cytoscape(TOM = as.matrix(dissTOM),
+                                             datKME = datKME,
+                                             number_of_edges = edges,
+                                             speciestfs = if(species=="Homo sapiens"){humantfs}else{if(species=="Mus musculus"){mousetfs}},
+                                             tfnumber = tfnumber,
+                                             annotation = gene_cluster_annot,
+                                             modules = unique(gene_cluster_annot$`Cluster color`)[i],
+                                             weighted = weighted,
+                                             threshold = 0.02,
+                                             name = "CytoscapeInput"))
+    
+  }
+  names(reslist)<-unique(gene_cluster_annot$`Cluster color`)
+  # Step 11: Identify markers
+  message("9] Identifying markers...")
+  
+  markers<-apply(data,MARGIN = 2, FUN = function(x, sel=samples_markers){
+    res1<-t.test(x[samples_markers],x[-samples_markers])$p.value
+    res1<-p.adjust(res1)
+    res2<-mean(x[samples_markers])-mean(x[-samples_markers])
+    res<-if(res1<0.05){res2}else{0}
+    return(res)
+  })
+  rownames(gene_cluster_annot)<-gene_cluster_annot$Gene
+  
+  markers_annot<-cbind(names(sort(markers,decreasing = T)),as.character(gene_cluster_annot[names(sort(markers,decreasing = T)),"Cluster color"]))
+  markers_annot<-data.frame(markers_annot,stringsAsFactors = F)
+  names(markers_annot)<-c("Gene","Cluster")
+  # One by one
+  clustermarkers<-list()
+  for(i in 1:ncol(datKME)){
+    clustermarkers[[i]]<-markers_annot
+    clustermarkers[[i]]$KME<-as.numeric(datKME[as.character(markers_annot$Gene),i])
+    clustermarkers[[i]]<-clustermarkers[[i]][clustermarkers[[i]]$KME>0.8,]
+    clustermarkers[[i]]$log2FC<-apply(data[,clustermarkers[[i]]$Gene],MARGIN = 2, FUN = function(x, sel=samples_markers){
+      res<-mean(x[samples_markers])-mean(x[-samples_markers])
+      return(res)
+    })
+  }
+  # All
+  markers_annot$log2FC<-apply(data[,markers_annot$Gene],MARGIN = 2, FUN = function(x, sel=samples_markers){
+    res<-mean(x[samples_markers])-mean(x[-samples_markers])
+    return(res)
+  })
+  
+  if(!dir.exists("./Markers")){
+    dir.create("./Markers")
+  } else {
+    if(overwrite){
+      unlink("Markers", recursive = TRUE)
+      dir.create("./Markers")
+    }
+  }
+  markers_annot<-markers_annot[abs(markers_annot$log2FC)>2.5,]
+  write.table(markers_annot,"./Markers/markers.txt",sep="\t")
+  
+  for(i in 1:length(clustermarkers)){
+    clustermarkers[[i]]<-clustermarkers[[i]][abs(clustermarkers[[i]]$log2FC)>2.5,]
+    write.table(clustermarkers[[i]],paste("./Markers/",names(datKME)[i],"_markers.txt",sep = ""),sep="\t")
+  }
+  message("10] Designing experiments...")
+  
+  if(!dir.exists("./Experiment_design")){
+    dir.create("./Experiment_design")
+  } else {
+    if(overwrite){
+      unlink("Experiment_design", recursive = TRUE)
+      dir.create("./Experiment_design")
+    }
+  }
+  
+  for(i in 1:length(reslist)){
+    markers<-read.table(file=paste("Markers/kME",names(reslist)[i],"_markers.txt",sep = ""),header = T,stringsAsFactors = F)
+    net<-reslist[[i]][(reslist[[i]]$fromNode%in%tfs$Symbol&reslist[[i]]$toNode%in%markers$Gene)|(reslist[[i]]$toNode%in%tfs$Symbol&reslist[[i]]$fromNode%in%markers$Gene),]
+    net$tf<-apply(net,MARGIN = 1, FUN = function(x){
+      if(sum(tfs$Symbol==as.character(x[1]))==1){
+        return(as.character(x[1]))
+      } else {
+        return(as.character(x[2]))
+      }
+    })
+    net$marker<-apply(net,MARGIN = 1, FUN = function(x){
+      if(sum(tfs$Symbol==as.character(x[1]))==1){
+        return(as.character(x[2]))
+      } else {
+        return(as.character(x[1]))
+      }
+    })
+    net<-net[,c("tf","marker")]
+    net<-net%>%
+      group_by(tf)%>%
+      summarise(markers = paste(marker,collapse = ", "))
+    keep<-NULL
+    for(j in 1:length(net$tf)){
+      keep[j]<-abs(as.numeric(datKME[net$tf[j],paste("kME",names(reslist)[i],sep = "")]))>0.75
+    }
+    net<-net[keep,]
+    net$kME<-as.numeric(datKME[net$tf,paste("kME",names(reslist)[i],sep = "")])
+    write.table(net, file = paste("Experiment_design/",names(reslist)[i],"-cluster.txt",sep = ""),sep = "\t")
+  }
+  message("Analysis completed.")
+}
+
+perform_WGCNA(data=data,samples_markers = c(1,15,30),legends = "centered")
+
+
+library(ggplot2)
+
+ggplot(datKMEtfs,aes(x=kMEdarkred,y=kMEmidnightblue))+
+  geom_point()
+
+
+# Now get iRegulon regulators and merge networks
+
+#darkred : metabolism
+#midnightblue : Nervous dev, cytoskel, carddev
+
+darkred_iRegulon<-c("HNF4A","HNF4G","HNF1A","EP300","RXRA","CEBPB","IRF9","NR2F2","NFIC","FOXA1","FOXA2","HDAC2","SOX9","FOXA3")
+midnightblue_iRegulon<-c("FOXM1","SPATS2","E2F4","GADD45A","PAX2","CPSF4","HSF2","SOX2","TFDP1","PSMA6","TCF12","RBBP9","MAPK1","EP300","CBFB","TEAD4","SPIB")
+
+add_iRegulon<-function(network, iregulon){
+  net<-read.table(file=paste("Experiment_design/",network,"-cluster.txt",sep = ""),header = T,stringsAsFactors = F)
+  iregulon<-iregulon[!iregulon%in%net$tf]
+  iregulon<-cbind(iregulon,rep(NA,length(iregulon)),rep(NA,length(iregulon)),rep("iRegulon-enriched",length(iregulon)))
+  iregulon<-data.frame(iregulon,stringsAsFactors = F)
+  net$iRegulon<-NA
+  names(iregulon)<-names(net)
+  net<-data.frame(rbind(net,iregulon),stringsAsFactors = F)
+  write.table(net,file=paste("Experiment_design/",network,"-cluster.txt",sep = ""),sep = "\t")
+}
+
+add_iRegulon("green",darkred_iRegulon)
+add_iRegulon("midnightblue",midnightblue_iRegulon)
+
+data_summary<-data
+phh<-which(names(data)%in%c("PHH.1","PHH.2","PHH.3"))
+hlc<-grep(pattern = "HLC",names(data_summary))
+
+data_summary$PHH_mean<-apply(data_summary,1,FUN = function(x){
+  res<-mean(x[phh])
+  return(res)
+})
+data_summary$HLC_mean<-apply(data_summary,1,FUN = function(x){
+  res<-mean(x[hlc])
+  return(res)
+})
+
+data_summary<-data_summary[,c("PHH_mean","HLC_mean")]
+data_summary$FC<-2^(data_summary$PHH_mean-data_summary$HLC_mean)
+
+for(i in 1:nrow(data_summary)){
+  if(as.numeric(data_summary[i,"FC"])<1){
+    data_summary[i,"FC"]<- (-1)/as.numeric(data_summary[i,"FC"])
+  }
+}
+
+midnightblue<-read.table("Experiment_design/midnightblue-cluster.txt",sep = "\t",stringsAsFactors = F, header = T)
+darkred<-read.table("Experiment_design/darkred-cluster.txt",sep = "\t",stringsAsFactors = F, header = T)
+
+View(data_summary[unique(append(midnightblue$tf,darkred$tf)),])
+
+
+
+get_most_diff_exp<-function(data,samples){
+  data$log2FC<-apply(data,1,FUN = function(x){
+    m1<-mean(as.numeric(x[samples]))
+    m2<-mean(as.numeric(x[-samples]))
+    res<-m1-m2
+    return(res)
+  })
+  data$p_value<-apply(data,1,FUN = function(x){
+    res<-t.test(as.numeric(x[samples]),as.numeric(x[-samples]))$p.value
+    return(res)
+  })
+  data$p.adj<-p.adjust(as.numeric(data$p_value), method = "BH")
+  data$Gene<-rownames(data)
+  data<-data[,c("Gene","log2FC","p_value","p.adj")]
+  data<-data[data$p.adj<0.05,]
+  data<-data[order(data$log2FC,decreasing = T),]
+  return(data)
+}
+
+diffex<-get_most_diff_exp(data,c(1,15,30))
+diffextf<-diffex[diffex$Gene%in%humantfs$Symbol,]
+
+write.table(diffex,"Preprocessed_data/diffexhep.txt",sep = "\t")
+write.table(diffextf,"Preprocessed_data/diffexheptf.txt",sep = "\t")
+
+
+
+
+

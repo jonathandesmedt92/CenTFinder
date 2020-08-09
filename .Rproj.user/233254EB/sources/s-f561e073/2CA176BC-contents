@@ -1,0 +1,39 @@
+########################################################
+###   CenTFinder                                     ###
+###   Dependencies                                   ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+
+source("https://bioconductor.org/biocLite.R")
+
+library(methods)
+library(affy)
+library(oligo)
+library(affyio)
+library(dplyr)
+library(data.table)
+library(nugohs1a520180.db)
+library(hgu133a.db)
+library(hgu133plus2.db)
+library(hgu219.db)
+library(sva)
+library(WGCNA)
+library(flashClust)
+library(gplots)
+library(AnnotationDbi)
+library(org.Hs.eg.db)
+library(org.Mm.eg.db)
+library(biomaRt)
+library(topGO)
+library(RColorBrewer)
+library(dplyr)
+library(ggplot2)
+library(Rtsne)
+library(tidyr)
+library(limma)
+library(RcisTarget)
+library(clusterProfiler)
+library(GSVA)
+

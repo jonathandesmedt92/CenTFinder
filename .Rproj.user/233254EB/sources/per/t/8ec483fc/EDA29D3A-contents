@@ -1,0 +1,52 @@
+########################################################
+###   CenTFinder                                     ###
+###   Pipeline                                       ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+
+# Initialise
+test<-CenTFinder()
+
+# Get batch data
+
+# Asssemble sample annotation
+test<-setAnnotations(test,path = path, platform_freq_cutoff = 0.00258)
+
+# Provide annotation files if necessary
+
+huex10<-fread("/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Microarray_annotations/HuEx-1_0-st-v2.na36.hg19.transcript.csv")
+hugene10<-fread("/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Microarray_annotations/HuGene-1_0-st-v1.na36.hg19.transcript.csv")
+hugene20<-fread("/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Microarray_annotations/HuGene-2_0-st-v1.na36.hg19.transcript.csv")
+
+huex10<-huex10[huex10$gene_assignment!="---",]
+huex10$gene_assignment<-trimws(sapply(strsplit(huex10$gene_assignment, split="//"),FUN=function(x){x[2]}))
+
+hugene10<-hugene10[hugene10$gene_assignment!="---",]
+hugene10$gene_assignment<-trimws(sapply(strsplit(hugene10$gene_assignment, split="//"),FUN=function(x){x[2]}))
+
+hugene20<-hugene20[hugene20$gene_assignment!="---",]
+hugene20$gene_assignment<-trimws(sapply(strsplit(hugene20$gene_assignment, split="//"),FUN=function(x){x[2]}))
+
+
+test<-loadProbeAnnotation(test,
+                          platform = "HuEx-1_0-st-v2",
+                          probes = huex10$transcript_cluster_id,
+                          symbols = huex10$gene_assignment)
+
+test<-loadProbeAnnotation(test,
+                          platform = "HuGene-1_0-st-v1",
+                          probes = hugene10$transcript_cluster_id,
+                          symbols = hugene10$gene_assignment)
+
+test<-loadProbeAnnotation(test,
+                          platform = "HuGene-2_0-st",
+                          probes = hugene20$transcript_cluster_id,
+                          symbols = hugene20$gene_assignment)
+
+# Analyse microarrays
+
+test<-analyseMicroarrays(test)
+
+

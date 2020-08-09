@@ -1,0 +1,84 @@
+########################################################
+###   CenTFinder                                     ###
+###   Class definitions                              ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+# Dependencies
+
+source("https://bioconductor.org/biocLite.R")
+biocLite("nugohs1a520180.db")
+biocLite("hgu133a.db")
+biocLite("affy")
+library(affy)
+library(oligo)
+library(affyio)
+library(dplyr)
+library(data.table)
+library(nugohs1a520180.db)
+library(hgu133a.db)
+library(hgu133plus2.db)
+
+# microarray path
+path = "/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/data.downloads/"
+
+
+# Method to get microarray info and to assign the result to a CenTFinder object
+
+setGeneric(name = "setAnnotations",
+           def = function(CenTFinderObject,path, platform_freq_cutoff){
+             standardGeneric("setAnnotations")
+           })
+
+setMethod(f = "setAnnotations",
+          signature = "CenTFinder",
+          definition = function(CenTFinderObject,path, platform_freq_cutoff){
+            # Get and set platform information
+            result<-get_microarrays_info(path,platform_freq_cutoff)
+            CenTFinderObject@sample_annotation<-result
+            # Notify in case platform annotations are missing
+            platform_annots<-data.frame(Platform = unique(result$Platform),
+                                        Annotation = "No annotation found.",
+                                        stringsAsFactors = F)
+            platform_annots[platform_annots$Platform%in%c("HG-U133_Plus_2","NuGO_Hs1a520180","HG-U219","HT_HG-U133A"),"Annotation"]<-"From package"
+            CenTFinderObject@platforms<-platform_annots
+            if(any(platform_annots$Annotation=="No annotation found.")){
+              msg<-paste0("Please provide an annotation file for :", paste(as.character(platform_annots[platform_annots$Annotation=="No annotation found.","Platform"]),collapse = ", "),".\nArrays for which no probe annotation file is provided will automatically be excluded from analysis.")
+              message(msg)
+            }
+            return(CenTFinderObject)
+          })
+
+# Method to manually set probe annotations
+
+setGeneric(name="loadProbeAnnotation",
+           def = function(CenTFinderObject,platform,probes,symbols){
+             standardGeneric("loadProbeAnnotation")
+           })
+
+setMethod(f = "loadProbeAnnotation",
+          signature = "CenTFinder",
+          definition = function(CenTFinderObject, platform, probes, symbols){
+            CenTFinderObject@probe_annotations[[platform]]<-data.frame(ACCNUM = probes,
+                                                                       SYMBOL = symbols,
+                                                                       stringsAsFactors = F)
+            CenTFinderObject@platforms[CenTFinderObject@platforms$Platform==platform,"Annotation"]<-"Annotation loaded."
+            return(CenTFinderObject)
+          })
+
+
+
+# Method to read and analyse microarray data, and subsequently to fill the intensity matrix into the WGCNA data slot
+
+setGeneric(name = "analyseMicroarrays",
+           def = function(CenTFinderObject){
+             standardGeneric("analyseMicroarrays")
+           })
+
+setMethod(f = "analyseMicroarrays",
+          signature = "CenTFinder",
+          definition = function(CenTFinderObject){
+            CenTFinderObject@data<-mp_analyse_microarray(CenTFinderObject)
+            return(CenTFinderObject)
+          })

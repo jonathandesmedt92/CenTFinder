@@ -1,0 +1,101 @@
+# Overlap between RNAseq, WGCNA, and iRegulon
+# Version 04092018
+
+# Install and load required packages
+
+library(dplyr)
+library(ggplot2)
+
+# Read in the WGCNA data
+
+wgcna<-list()
+files<-list.files(path = "/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Hepatocytes/WGCNA_microarrays/Experiment_design")
+for(i in 1:length(files)){
+  wgcna[[i]]<-read.table(file = paste("/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Hepatocytes/WGCNA_microarrays/Experiment_design/",files[i],sep = ""))
+  wgcna[[i]][]<-lapply(wgcna[[i]],as.character)
+}
+
+wgcna<-bind_rows(wgcna)
+wgcna<-data.frame(wgcna,stringsAsFactors = F)
+names(wgcna)[1]<-"Gene"
+gene_cluster_annot<-read.table("/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Hepatocytes/WGCNA_microarrays/Preprocessed_data/Gene_cluster_annotation.txt",sep = "\t",stringsAsFactors = F, header = T)
+datkme<-read.table("/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Hepatocytes/WGCNA_microarrays/Preprocessed_data/datKME.txt",sep = "\t",stringsAsFactors = F, header = T)
+
+gene_cluster_annot$KME<-NULL
+
+for(i in 1:nrow(gene_cluster_annot)){
+  gene_cluster_annot[i,"KME"]<-datkme[as.character(gene_cluster_annot[i,"Gene"]),paste("kME",as.character(gene_cluster_annot[i,"Cluster.color"]),sep="")]
+}
+
+# Read in the RNAseq data
+
+rnaseq<-read.table("/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Hepatocytes/RNAseq/Results/diff_genes_PHH_vs_HLC.txt",stringsAsFactors = F,header = T)
+rnaseq<-rnaseq[!is.na(rnaseq$Gene),]
+humantfs<-read.table("allhumantfs.txt",sep="\t",stringsAsFactors = F,header = T)
+names(humantfs)[4]<-"Gene"
+
+# Read in the iRegulon data
+
+markercyto<-read.csv("Merged Network_1 default edge.csv")
+markercyto<-markercyto[,c("Regulator.Gene","Target.Gene")]
+names(markercyto)[1]<-"Gene"
+
+# Merge all the data sources
+
+data<-Reduce(function(x,y) merge(x,y,all=T, by="Gene"), list(rnaseq, wgcna, markercyto, gene_cluster_annot))
+
+# Filter for TFs
+
+data<-data[data$Gene%in%humantfs$Gene,]
+
+# Select and rename
+
+data<-data[,c("Gene","log2FoldChange","padj","KME","Cluster.color","Target.Gene")]
+names(data)<-c("TF","log2FC_RNAseq","P_adj_RNAseq","kME","Cluster","Target_iRegulon")
+
+
+# Assign classes (Class 1 = Evidence on RNAseq, WGCNA, and iRegulon level,
+#                 Class 2 = Evidence on RNAseq and WGCNA, RNAseq and iRegulon, or WGCNA and iRegulon,
+#                 Class 3 = Evidence on just one level)
+
+data$Class<-NULL
+data$kME<-as.numeric(data$kME)
+data$kME[is.na(data$kME)]<-0
+cutoff_kme=0.7
+
+data[!is.na(data$log2FC_RNAseq)&abs(data$kME)>cutoff_kme&!is.na(data$Target_iRegulon),"Class"]<-"Class 1"
+
+data[is.na(data$log2FC_RNAseq)&abs(data$kME)>cutoff_kme&!is.na(data$Target_iRegulon),"Class"]<-"Class 2"
+data[!is.na(data$log2FC_RNAseq)&!abs(data$kME)>cutoff_kme&!is.na(data$Target_iRegulon),"Class"]<-"Class 2"
+data[!is.na(data$log2FC_RNAseq)&abs(data$kME)>cutoff_kme&is.na(data$Target_iRegulon),"Class"]<-"Class 2"
+
+data[!is.na(data$log2FC_RNAseq)&!abs(data$kME)>cutoff_kme&is.na(data$Target_iRegulon),"Class"]<-"Class 3"
+data[is.na(data$log2FC_RNAseq)&abs(data$kME)>cutoff_kme&is.na(data$Target_iRegulon),"Class"]<-"Class 3"
+data[is.na(data$log2FC_RNAseq)&!abs(data$kME)>cutoff_kme&!is.na(data$Target_iRegulon),"Class"]<-"Class 3"
+
+data<-data[!is.na(data$Class),]
+data<-data[!duplicated(data),]
+
+# Get class 2 ranking
+
+data2<-data[data$Class=="Class 2",]
+
+data2<-data[data$Class=="Class 2"&!is.na(data$log2FC_RNAseq),1:2]
+data2<-data2[!duplicated(data2),]
+data2<-data2[order(data2$log2FC_RNAseq,decreasing = T),][c(1:20,nrow(data2):(nrow(data2)-19)),]
+
+# Get class 1 ranking
+
+data1<-data[data$Class=="Class 1",]
+data1<-data1[,1:2]
+data1<-data1[!duplicated(data1),]
+
+write.table(data,"Final_class_ranking05092018.txt",sep = "\t")
+
+
+# HLC
+
+# 10 Class 1
+# 
+
+

@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553505778749.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "7EFFA068",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1553505778749,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "66E993EF",
+        "caption" : "weighing",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=weighing&cache_key=66E993EF",
+        "displayedObservations" : "7",
+        "environment" : "",
+        "object" : "weighing",
+        "preview" : "0",
+        "totalObservations" : "7",
+        "variables" : "2"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

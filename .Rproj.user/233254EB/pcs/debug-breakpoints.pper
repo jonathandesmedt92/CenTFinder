@@ -1,0 +1,81 @@
+{
+    "debugBreakpointsState" : {
+        "breakpoints" : [
+            {
+                "editor_line_number" : 230,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 0,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 230,
+                "needs_updated_steps" : true,
+                "package_name" : "",
+                "path" : "~/CenTFinder/R/pipeline.R",
+                "state" : 1,
+                "type" : 1
+            },
+            {
+                "editor_line_number" : 251,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 1,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 251,
+                "needs_updated_steps" : true,
+                "package_name" : "",
+                "path" : "~/CenTFinder/R/pipeline.R",
+                "state" : 1,
+                "type" : 1
+            },
+            {
+                "editor_line_number" : 253,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 2,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 253,
+                "needs_updated_steps" : true,
+                "package_name" : "",
+                "path" : "~/CenTFinder/R/pipeline.R",
+                "state" : 1,
+                "type" : 1
+            },
+            {
+                "editor_line_number" : 255,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 3,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 255,
+                "needs_updated_steps" : true,
+                "package_name" : "",
+                "path" : "~/CenTFinder/R/pipeline.R",
+                "state" : 1,
+                "type" : 1
+            },
+            {
+                "editor_line_number" : 202,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 5,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 202,
+                "needs_updated_steps" : false,
+                "package_name" : "",
+                "path" : "~/CenTFinder/R/pipelinehep.R",
+                "state" : 1,
+                "type" : 1
+            }
+        ]
+    }
+}

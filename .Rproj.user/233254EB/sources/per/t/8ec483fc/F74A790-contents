@@ -1,0 +1,47 @@
+########################################################
+###   CenTFinder                                     ###
+###   Class definitions                              ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+library(methods)
+
+# Class for microarray batch read in and raw analysis
+
+# Class for CenTFinder
+
+CenTFinder<-setClass("CenTFinder",
+         slots = c(
+           data = "matrix",
+           source = "character",
+           platforms = "data.frame",
+           probe_annotations = "list",
+           filtered_data = "matrix",
+           plots = "list",
+           adjacency = "matrix",
+           similarity = "matrix",
+           dissimilarity = "matrix",
+           power = "numeric",
+           TOM = "matrix",
+           tree = "list",
+           module_labels = "character",
+           module_labels_merged = "character",
+           module_colors = "character",
+           module_colors_merged = "character",
+           GO = "list",
+           KEGG = "list",
+           module_trait_relationships = "matrix",
+           cytoscape_exports = "list",
+           markers = "list",
+           surface_markers = "list",
+           sample_annotation = "data.frame"
+         ))
+
+
+
+
+
+
+
+

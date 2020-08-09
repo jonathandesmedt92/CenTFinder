@@ -1,0 +1,483 @@
+########################################################
+###   CenTFinder                                     ###
+###   Function definitions                           ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+# Function to get info about microarray platforms used, and subsequently to filter
+
+get_microarrays_info<-function(path, platform_freq_cutoff=0.00258){
+  # Get file names and extract platform information
+  filenames <- list.celfiles(path=path)
+  f<-paste(path,filenames,sep = "")
+  f<-data.frame(sapply(f, function(x) read.celfile.header(x)$cdfName),stringsAsFactors = F)
+  f$File_name<-rownames(f)
+  names(f)<-c("Platform","Path")
+  f$File_name<-filenames
+  f<-f%>%
+    group_by(Platform)%>%
+    mutate(Frequency = length(File_name))
+  # Remove files belonging to infrequent platforms (<0.05%)
+  f<-f[f$Frequency>ceiling(nrow(f)*platform_freq_cutoff),]
+  # Return
+  return(f)
+}
+
+annotate_platform<-function(CenTFinderObject,platform){
+  if(platform%in%c("HG-U133_Plus_2","NuGO_Hs1a520180","HG-U219","HT_HG-U133A")){
+    db<-switch(platform,
+               "HG-U133_Plus_2" = list(hgu133plus2ACCNUM,hgu133plus2SYMBOL,hgu133plus2GENENAME),
+               "NuGO_Hs1a520180"=list(nugohs1a520180ACCNUM,nugohs1a520180SYMBOL,nugohs1a520180SYMBOL),
+               "HG-U219"=list(hgu219ACCNUM,hgu219SYMBOL,hgu219SYMBOL),
+               "HT_HG-U133A"=list(hgu133aACCNUM,hgu133aSYMBOL,hgu133aSYMBOL)
+    )
+    annot<-data.frame(SYMBOL=sapply(contents(db[[2]]), paste, collapse=", "),
+                      ACCNUM =0)
+    annot$ACCNUM<-rownames(annot)
+  } else if(platform%in%names(CenTFinderObject@probe_annotations)){
+    annot<-CenTFinderObject@probe_annotations[[platform]]
+  } else {
+    annot<-NULL
+  }
+  return(annot)
+}
+
+gm_mean<-function(x, na.rm=TRUE){
+  exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+}
+
+analyse_microarray<-function(CenTFinderObject,arrays, platform){
+  # Read in the arrays
+  eset<-read.celfiles(arrays)
+  # RMA normalise
+  affyRaw<-rma(eset)
+  # Extract expression matrix
+  data<-data.frame(exprs(affyRaw),check.names = F)
+  # Create probe annotation
+  annot<-annotate_platform(CenTFinderObject,platform)
+  # Merge annotation and data
+  data <- merge(annot, data, by.x="ACCNUM", by.y=0, all=F)
+  #Collapse probes to genes by means of geometric mean
+  data<-aggregate(.~data$SYMBOL,data=data[,-c(1:2)],FUN=gm_mean,na.rm=T)
+  data<-data[data$`data$SYMBOL`!="NA",]
+  rownames(data)<-data$`data$SYMBOL`
+  data$`data$SYMBOL`<-NULL
+  return(data)
+}
+
+calculate_cumulative_gene_consensus<-function(ordered_platforms, data){
+  gene_count<-NULL
+  for(i in seq_along(ordered_platforms)){
+    if(i==1){
+      gene_count<-append(gene_count,nrow(data[[ordered_platforms[i]]]))
+      genes<-rownames(data[[ordered_platforms[i]]])
+    } else {
+      gene_count<-append(gene_count,sum(genes%in%row.names(data[[ordered_platforms[i]]])))
+      genes<-genes[genes%in%rownames(data[[ordered_platforms[i]]])]
+    }
+  }
+  return(gene_count)
+}
+
+merge_expr<-function(x,y){
+  res<-merge(x,y,by=0,all=F)
+  rownames(res)<-res$Row.names
+  res$Row.names<-NULL
+  return(res)
+}
+
+mp_analyse_microarray<-function(CenTFinderObject, platform_keep=NULL){
+  # Loop over the different platforms and analyse per platform
+  platforms<-CenTFinderObject@platforms[CenTFinderObject@platforms$Annotation!="No annotation found.","Platform"]
+  annotation<-CenTFinderObject@sample_annotation
+  data<-list()
+  for(i in seq_along(platforms)){
+    data[[i]]<-analyse_microarray(arrays = as.character(as.matrix(annotation[annotation$Platform==platforms[i]&!is.na(annotation$Cell_type),"Path"])),
+                                  platform = platforms[i],
+                                  CenTFinderObject = CenTFinderObject)
+  }
+  names(data)<-platforms
+  # Weigh number of genes and number of arrays
+  weighing<-data.frame(genes = sapply(data,nrow),
+                       samples = sapply(data,ncol),
+                       platforms = platforms,
+                       stringsAsFactors = F)
+  weighing<-weighing[order(weighing$genes, decreasing = T),]
+  row.names(weighing)<-NULL
+  weighing$samples_cumsum<-cumsum(weighing$samples)
+  weighing$genecount_cumsum<-calculate_cumulative_gene_consensus(ordered_platforms = weighing$platforms, data=data)
+  weighing$number_of_cells<-weighing$samples_cumsum*weighing$genecount_cumsum
+  keep_platforms<-weighing$platforms[1:which.max(weighing$number_of_cells)]
+  # Add required platforms
+  if(!is.null(keep_platforms)){
+    extra_platforms<-platform_keep[!platform_keep%in%keep_platforms]
+    keep_platforms<-append(keep_platforms,extra_platforms)
+  }
+  # Remove data and change platform info
+  CenTFinderObject@platforms$Used<-FALSE
+  CenTFinderObject@platforms[CenTFinderObject@platforms$Platform%in%keep_platforms,"Used"]<-TRUE
+  data<-data[keep_platforms]
+  # Merge data
+  data<-Reduce(function(x,y) merge_expr(x=x, y=y),data)
+  # Perform prior quantile normalisation
+  data<-normalizeQuantiles(data)
+  # Adjust batch effects with Combat
+  if(length(keep_platforms)>1){
+    modmat<-as.matrix(CenTFinderObject@sample_annotation[order(match(names(data),CenTFinderObject@sample_annotation$File_name),decreasing = F),])
+    batch<-as.factor(modmat[,"Platform"])
+    data<-ComBat(dat=as.matrix(data), batch=batch, mod=NULL)
+  }
+  # Fill in the data
+  CenTFinderObject@data<-as.matrix(data)
+  # Return
+  return(CenTFinderObject)
+}
+
+filter_genes<-function(data, tfs=humantfs, TF_range_cutoff=1, max_genes=9000){
+  # We consider different cut-offs for TFs and non-TFs, so we split the data
+  data_TFs<-data[rownames(data)%in%tfs,]
+  data_noTFs<-data[!rownames(data)%in%tfs,]
+  # For TFs, we require the range to be ideally more than 1. (Customisable with TF_range_cutoff)
+  tfranges<-apply(data_TFs,1,FUN = function(x){max(x)-min(x)})
+  data_TFs<-data_TFs[tfranges>TF_range_cutoff,]
+  # To run things fast enough, we require the total number of genes to be max 9000. (Customisable with max_genes)
+  # For non-TFs, we select the most variable genes.
+  no_tf_vars<-apply(data_noTFs,1,FUN = function(x){var(x)})
+  data_noTFs<-data_noTFs[order(no_tf_vars, decreasing = T),]
+  data_noTFs<-data_noTFs[c(1:min(nrow(data_noTFs),9000-nrow(data_TFs))),]
+  # Bind data
+  data<-rbind(data_TFs,data_noTFs)
+  return(data)
+}
+
+make_PCA<-function(data){
+  if(!is.matrix(data)){
+    return(NULL)
+  }
+  pcadata<-prcomp(t(data), scale. = T)
+  dat.sum<-summary(pcadata)
+  dat<-as.data.frame(pcadata$x)
+  res<-ggplot(data = dat, aes(x = PC1, y = PC2, label = rownames(dat))) +
+          geom_point()+
+          geom_hline(yintercept = 0, colour = "gray65") +
+          geom_vline(xintercept = 0, colour = "gray65")+
+          geom_text(colour = "black", alpha = 0.8, size = 2, nudge_x = 1)+
+          xlab(paste("PC1",round(dat.sum$importance["Proportion of Variance",1]*100,2),"%",sep=", "))+
+          ylab(paste("PC2",round(dat.sum$importance["Proportion of Variance",2]*100,2),"%",sep=", "))+
+          theme(text = element_text(size=20),
+                axis.text.x = element_text(angle=0, hjust=1))+
+          ggtitle("PCA plot")
+  return(res)
+}
+
+calc_TOM<-function(data, network_type="signed",powers=1:30){
+  # Transpose data
+  data<-data.frame(t(data),stringsAsFactors = F)
+  # Picking soft tresholding power
+  message("Picking soft thresholding power...")
+  sft <- pickSoftThreshold(data, powerVector = powers, networkType = network_type)
+  # Create plots
+  p<-list()
+  p[["Scale_independence"]]<-ggplot(sft$fitIndices,aes(x=Power,y=-sign(slope)*SFT.R.sq))+
+          geom_text(aes(label=Power))+
+          theme_bw()+
+          xlab("Soft Treshold (power)")+
+          ylab(paste0("Scale Free Topology Model Fit,",network_type,"R^2"))+
+          ggtitle("Scale independence")+
+          geom_hline(yintercept = 0.9, col="red")
+  p[["Mean_connectivity"]]<-ggplot(sft$fitIndices,aes(x=Power,y=mean.k.))+
+          geom_text(aes(label=Power))+
+          theme_bw()+
+          xlab("Soft Treshold (power)")+
+          ylab("Mean Connectivity")+
+          ggtitle("Mean connectivity")
+  # Set power
+  if(is.na(sft$powerEstimate)|any(sft$fitIndices[sft$fitIndices$Power==sft$powerEstimate,"slope"]>0)){
+    power<-sft$fitIndices[sft$fitIndices$SFT.R.sq==max(sft$fitIndices$SFT.R.sq[sft$fitIndices$slope<0]),"Power"]
+  } else {
+    power<-sft$powerEstimate
+  }
+  # Calculate adjacency matrix
+  message("Calculating adjacency matrix...")
+  A <- adjacency(datExpr =data, power = power, type = network_type)
+  # Calculate topological overlap matrix TOM
+  message("Calculating topological overlap matrix...")
+  dissTOM <- TOMdist(A)
+  # Return
+  res<-list(TOM=dissTOM, sft_power=power, plots=p)
+  return(res)
+}
+
+define_modules<-function(data,TOM, cut_height=0.3){
+  # Hierarchical clustering
+  geneTree <-flashClust(as.dist(TOM), method = "average")
+  # Dynamic tree cut
+  moduleLabelsManual <- cutreeDynamic(dendro = geneTree, distM = TOM, method = "hybrid",
+                                      deepSplit = 2, pamRespectsDendro = F, minClusterSize = 30)
+  moduleColorsManual <- labels2colors(moduleLabelsManual)
+  # Merge highly correlated clusters
+  data<-data.frame(t(data),stringsAsFactors = F)
+  merge<-mergeCloseModules(data,moduleColorsManual, cutHeight = cut_height)
+  moduleColorsManual<-merge$colors
+  # Get genes associated with each module
+  gene_cluster_annot<-data.frame(cbind(names(data),moduleColorsManual),stringsAsFactors = F)
+  names(gene_cluster_annot)<-c("Gene","Cluster_color")
+  # Calculate kMEs
+  MElist <- moduleEigengenes(data, colors = moduleColorsManual,nPC = 6)
+  varexp<-MElist$varExplained
+  MEs <- MElist$eigengenes
+  MEs = orderMEs(MEs)
+  datKME <- signedKME(data,MEs)
+  # Return
+  res<-list(cluster_genes=gene_cluster_annot, module_colors = moduleColorsManual, tree=geneTree, KMEs=datKME)
+  return(res)
+}
+
+getGO<-function(geneset,universe,species=c("Homo sapiens","Mus musculus")){
+  all_genes<-append(rep(0,length(geneset)),rep(1,length(universe)))
+  names(all_genes)<-append(geneset,universe[!universe%in%geneset])
+  GOBPdata <- new("topGOdata", ontology = "BP", allGenes = all_genes, geneSel = function(p) p == 0, description = "Test", annot = annFUN.org, mapping=if(species=="Homo sapiens"){"org.Hs.eg.db"} else {if(species=="Mus musculus"){"org.Mm.eg.db"}}, ID="SYMBOL")
+  GOCCdata <- new("topGOdata", ontology = "CC", allGenes = all_genes, geneSel = function(p) p == 0, description = "Test", annot = annFUN.org, mapping=if(species=="Homo sapiens"){"org.Hs.eg.db"} else {if(species=="Mus musculus"){"org.Mm.eg.db"}}, ID="SYMBOL")
+  GOMFdata <- new("topGOdata", ontology = "MF", allGenes = all_genes, geneSel = function(p) p == 0, description = "Test", annot = annFUN.org, mapping=if(species=="Homo sapiens"){"org.Hs.eg.db"} else {if(species=="Mus musculus"){"org.Mm.eg.db"}}, ID="SYMBOL")
+
+  resultFisherBP <- runTest(GOBPdata, algorithm = "classic", statistic = "fisher")
+  resultFisherCC <- runTest(GOCCdata, algorithm = "classic", statistic = "fisher")
+  resultFisherMF <- runTest(GOMFdata, algorithm = "classic", statistic = "fisher")
+
+  BP<-data.frame(GenTable(GOBPdata, classicFisher = resultFisherBP, topNodes = 15, numChar=100),stringsAsFactors = F)
+  CC<-data.frame(GenTable(GOCCdata, classicFisher = resultFisherCC, topNodes = 15, numChar=100),stringsAsFactors = F)
+  MF<-data.frame(GenTable(GOMFdata, classicFisher = resultFisherMF, topNodes = 15, numChar=100),stringsAsFactors = F)
+  res<-list(BP,CC,MF)
+  names(res)<-c("BP","CC","MF")
+  return(res)
+}
+
+getKEGG<-function(geneset,geneset_IDtype, species){
+  if(species=="Homo sapiens"){organism="hsa"}
+  if(species=="Mus musculus"){organism="mmu"}
+  first<-function(x){x[[1]]}
+
+  geneset<-as.character(mapIds(if(species=="Homo sapiens"){org.Hs.eg.db}else{if(species=="Mus musculus"){org.Mm.eg.db}},
+                               keys = geneset,
+                               column = "ENTREZID",
+                               keytype = geneset_IDtype,
+                               multiVals = first))
+  kk<-enrichKEGG(gene = geneset,
+                 organism = organism,
+                 pvalueCutoff = 0.05)
+  res<-head(kk,100)
+  return(res)
+}
+
+calc_regulons<-function(gene_lists, motif_db_path, cores=detectCores()-1){
+  # Import motif rankings
+  motifRankings<-importRankings(motif_db_path)
+  # 1. Calculate AUC
+
+  gene_lists<-lapply(gene_lists, FUN=function(x){
+    x<-x[x%in%names(motifRankings@rankings)]
+  })
+
+
+  motifs_AUC <- calcAUC(gene_lists, motifRankings)
+
+  # 2. Select significant motifs, add TF annotation & format as table
+  motifEnrichmentTable <- addMotifAnnotation(motifs_AUC,
+                                             motifAnnot=motifAnnotations_hgnc)
+
+  # 3. Identify significant genes for each motif
+  # (i.e. genes from the gene set in the top of the ranking)
+  # Note: Method 'iCisTarget' instead of 'aprox' is more accurate, but slower
+  motifEnrichmentTable_wGenes <- addSignificantGenes(motifEnrichmentTable,
+                                                     geneSets=gene_lists,
+                                                     rankings=motifRankings,
+                                                     nCores=cores,
+                                                     method="aprox")
+  # 4. Merge regulons
+  merged_regulons<-motifEnrichmentTable_wGenes%>%
+    group_by(geneSet,TF_highConf)%>%
+    summarise(enrichedGenes = paste(enrichedGenes,collapse = ";"))
+  merged_regulons<-merged_regulons[merged_regulons$TF_highConf!="",]
+  merged_regulons$TF_highConf<-gsub(merged_regulons$TF_highConf, pattern = "; ",replacement = ";")
+  merged_regulons$TF_highConf<-sapply(strsplit(merged_regulons$TF_highConf,split=" "),FUN = function(x){x[1]})
+  merged_regulons<-merged_regulons%>%
+    group_by(geneSet, TF_highConf)%>%
+    summarise(enrichedGenes = paste(enrichedGenes,collapse = ";"))
+  # 5. Create CytoScape network file
+  tmp<-merged_regulons
+  tmp$TF_highConf<-sapply(strsplit(tmp$TF_highConf, split=";"), FUN = function(x){x[1]})
+
+  cytoscape_network<-data.frame(TF = character(),
+                                Targets = character(),
+                                Module = character(),
+                                stringsAsFactors = F)
+  for(i in 1:nrow(tmp)){
+    regulon<-data.frame(TF = tmp$TF_highConf[i],
+                        Targets = strsplit(tmp$enrichedGenes[i],split=";")[[1]],
+                        Module = tmp$geneSet[i],
+                        stringsAsFactors = F)
+    cytoscape_network<-bind_rows(cytoscape_network,regulon)
+  }
+  cytoscape_network<-cytoscape_network[!duplicated(cytoscape_network),]
+  # Return
+  res<-list(motif_enrichment_table=motifEnrichmentTable_wGenes, merged_regulons=merged_regulons, cytoscape_network = cytoscape_network)
+}
+
+setPlatformAnnotations<-function(CenTFinderObject,path, platform_freq_cutoff){
+  # Get and set platform information
+  result<-get_microarrays_info(path,platform_freq_cutoff)
+  CenTFinderObject@sample_annotation<-result
+  # Notify in case platform annotations are missing
+  platform_annots<-data.frame(Platform = unique(result$Platform),
+                              Annotation = "No annotation found.",
+                              stringsAsFactors = F)
+  platform_annots[platform_annots$Platform%in%c("HG-U133_Plus_2","NuGO_Hs1a520180","HG-U219","HT_HG-U133A"),"Annotation"]<-"From package"
+  CenTFinderObject@platforms<-platform_annots
+  if(any(platform_annots$Annotation=="No annotation found.")){
+    msg<-paste0("Please provide an annotation file for :", paste(as.character(platform_annots[platform_annots$Annotation=="No annotation found.","Platform"]),collapse = ", "),".\nArrays for which no probe annotation file is provided will automatically be excluded from analysis.")
+    message(msg)
+  }
+  return(CenTFinderObject)
+}
+
+loadProbeAnnotation<-function(CenTFinderObject, platform, probes, symbols){
+  CenTFinderObject@probe_annotations[[platform]]<-data.frame(ACCNUM = probes,
+                                                             SYMBOL = symbols,
+                                                             stringsAsFactors = F)
+  CenTFinderObject@platforms[CenTFinderObject@platforms$Platform==platform,"Annotation"]<-"Annotation loaded."
+  return(CenTFinderObject)
+}
+
+analyseMicroarrays<-function(CenTFinderObject, platforms_keep=NULL){
+  CenTFinderObject<-mp_analyse_microarray(CenTFinderObject, platform_keep=platforms_keep)
+  colnames(CenTFinderObject@data)<-CenTFinderObject@sample_annotation$Sample[match(colnames(CenTFinderObject@data),CenTFinderObject@sample_annotation$File_name)]
+  return(CenTFinderObject)
+}
+
+filterGenes<-function(CenTFinderObject, tfs=humantfs, TF_range_cutoff=1, max_genes=9000){
+  CenTFinderObject@filtered_data<-filter_genes(CenTFinderObject@data, tfs=tfs, TF_range_cutoff = TF_range_cutoff, max_genes = max_genes)
+  return(CenTFinderObject)
+}
+
+applyWGCNA<-function(CenTFinderObject, network_type=c("signed","unsigned"),powers=1:30, cut_height=0.3){
+  # Calculate TOM
+  res<-calc_TOM(data = CenTFinderObject@filtered_data, network_type = network_type,powers=powers)
+  CenTFinderObject@TOM<-as.matrix(res$TOM)
+  CenTFinderObject@power<-res$sft_power
+  CenTFinderObject@plots<-append(CenTFinderObject@plots,res$plots)
+  # Define modules
+  res<-define_modules(data = CenTFinderObject@filtered_data, TOM = CenTFinderObject@TOM, cut_height=cut_height)
+  CenTFinderObject@gene_cluster_annotation<-res$cluster_genes
+  CenTFinderObject@module_colors<-res$module_colors
+  CenTFinderObject@tree<-res$tree
+  CenTFinderObject@kMEs<-res$KMEs
+  # Return
+  return(CenTFinderObject)
+}
+
+analyseClusters<-function(CenTFinderObject, GO=T, KEGG=T, PCA=T, RCisTarget=T,species=c("Homo sapiens","Mus musculus"), cores=1, motif_db_path){
+  GOs<-list()
+  KEGGs<-list()
+  PCAs<-list()
+  RCisTargets<-NULL
+  # Perform GO analyses
+  if(GO){
+    message("Performing Gene Ontology analyses on the identified WGCNA modules...")
+    for(module in unique(CenTFinderObject@gene_cluster_annotation$Cluster_color)){
+      GOs[[module]]<-getGO(geneset = as.character(CenTFinderObject@gene_cluster_annotation[CenTFinderObject@gene_cluster_annotation$Cluster_color==module,"Gene"]),
+                           universe = as.character(unique(CenTFinderObject@gene_cluster_annotation$Gene)),
+                           species = species)
+    }
+    CenTFinderObject@GO<-GOs
+  }
+  # Perform KEGG analyses
+  if(KEGG){
+    message("Performing KEGG analyses on the identified WGCNA modules...")
+    for(module in unique(CenTFinderObject@gene_cluster_annotation$Cluster_color)){
+      KEGGs[[module]]<-getKEGG(geneset = as.character(CenTFinderObject@gene_cluster_annotation[CenTFinderObject@gene_cluster_annotation$Cluster_color==module,"Gene"]),
+                               geneset_IDtype = "SYMBOL",
+                               species = species)
+    }
+    CenTFinderObject@KEGG<-KEGGs
+  }
+  # Perform PCA analyses
+  if(PCA){
+    message("Creating PCA plots per cluster...")
+    for(module in unique(CenTFinderObject@gene_cluster_annotation$Cluster_color)){
+      genes<-as.character(CenTFinderObject@gene_cluster_annotation[CenTFinderObject@gene_cluster_annotation$Cluster_color==module,"Gene"])
+      PCAs[[module]]<-make_PCA(data = CenTFinderObject@filtered_data[rownames(CenTFinderObject@filtered_data)%in%genes,])
+    }
+    CenTFinderObject@plots$PCA_plots_per_cluster<-PCAs
+  }
+  # Perform RCisTarget analysis
+  if(RCisTarget){
+    message("Running primary RCisTarget analyses on the identified WGCNA modules...")
+    gene_lists<-list()
+    for(color in unique(CenTFinderObject@gene_cluster_annotation$Cluster_color)){
+      gene_lists[[color]]<-as.character(CenTFinderObject@gene_cluster_annotation[CenTFinderObject@gene_cluster_annotation$Cluster_color==color,"Gene"])
+    }
+    RCisTargets<-calc_regulons(gene_lists = gene_lists,
+                               motif_db_path = motif_db_path,
+                               cores = cores)
+    RCisTargets<-lapply(RCisTargets, FUN=function(x){
+      x$Analysis<-"modules"
+      x$Level<-"primary"
+      return(x)
+    })
+    message("Running secondary RCisTarget analyses on the identified WGCNA modules...")
+    sec_genelist<-unique(append(RCisTargets$cytoscape_network$TF,RCisTargets$cytoscape_network$Targets))
+    RCisTargets2<-calc_regulons(gene_lists = list(sec=sec_genelist),
+                                motif_db_path = motif_db_path,
+                                cores = cores)
+    RCisTargets2<-lapply(RCisTargets2, FUN=function(x){
+      x$Analysis<-"modules"
+      x$Level<-"secondary"
+      return(x)
+    })
+  }
+  merged_RCisTargets<-list()
+  merged_RCisTargets[["motif_enrichment_table"]]<-bind_rows(RCisTargets$motif_enrichment_table, RCisTargets2$motif_enrichment_table)
+  merged_RCisTargets[["regulons"]]<-bind_rows(RCisTargets$merged_regulons, RCisTargets2$merged_regulons)
+  merged_RCisTargets[["cytoscape_networks"]]<-bind_rows(RCisTargets$cytoscape_network, RCisTargets2$cytoscape_network)
+
+  CenTFinderObject@motif_enrichment<-merged_RCisTargets$motif_enrichment_table
+  CenTFinderObject@regulons<-merged_RCisTargets$regulons
+  CenTFinderObject@cytoscape_networks<-merged_RCisTargets$cytoscape_networks
+  # Return
+  return(CenTFinderObject)
+}
+
+addMarkers<-function(CenTFinderObject, markers, cores=1, motif_db_path){
+  RCisTargets<-calc_regulons(gene_lists = list(markers=markers),
+                             motif_db_path = motif_db_path,
+                             cores = cores)
+  RCisTargets<-lapply(RCisTargets, FUN=function(x){
+    x$Analysis<-"markers"
+    x$Level<-"primary"
+    return(x)
+  })
+  sec_genelist<-unique(append(RCisTargets$cytoscape_network$TF,RCisTargets$cytoscape_network$Targets))
+  RCisTargets2<-calc_regulons(gene_lists = list(markers=sec_genelist),
+                              motif_db_path = motif_db_path,
+                              cores = cores)
+  RCisTargets2<-lapply(RCisTargets2, FUN=function(x){
+    x$Analysis<-"markers"
+    x$Level<-"secondary"
+    return(x)
+  })
+  merged_RCisTargets<-list()
+  merged_RCisTargets[["motif_enrichment_table"]]<-bind_rows(RCisTargets$motif_enrichment_table, RCisTargets2$motif_enrichment_table)
+  merged_RCisTargets[["regulons"]]<-bind_rows(RCisTargets$merged_regulons, RCisTargets2$merged_regulons)
+  merged_RCisTargets[["cytoscape_networks"]]<-bind_rows(RCisTargets$cytoscape_network, RCisTargets2$cytoscape_network)
+
+  CenTFinderObject@motif_enrichment<-bind_rows(CenTFinderObject@motif_enrichment,merged_RCisTargets$motif_enrichment_table)
+  CenTFinderObject@regulons<-bind_rows(CenTFinderObject@regulons,merged_RCisTargets$regulons)
+  CenTFinderObject@cytoscape_networks<-bind_rows(CenTFinderObject@cytoscape_networks,merged_RCisTargets$cytoscape_networks)
+
+  return(CenTFinderObject)
+}
+
+
+
+

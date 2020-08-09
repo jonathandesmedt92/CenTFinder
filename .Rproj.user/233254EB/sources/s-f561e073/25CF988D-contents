@@ -1,0 +1,31 @@
+setClass("Person", 
+         slots = c(
+           name = "character", 
+           age = "numeric"
+         )
+)
+
+  john <- new("Person", name = "John Smith", age = NA_real_)
+
+  is(john)
+#> [1] "Person"
+john@name
+#> [1] "John Smith"
+slot(john, "age")
+#> [1] NA
+Generally, you should only use @ in your methods. If you’re working with someone else’s class, look for accessor functions that allow you to safely set and get slot values. As the developer of a class, you should also provide your own accessor functions. Accessors are typically S4 generics allowing multiple classes to share the same external interface.
+
+Here we’ll create a setter and getter for the age slot by first creating generics with setGeneric():
+  
+  setGeneric("age", function(x) standardGeneric("age"))
+setGeneric("age<-", function(x, value) standardGeneric("age<-"))
+And then defining methods with setMethod():
+  
+  setMethod("age", "Person", function(x) x@age)
+setMethod("age<-", "Person", function(x, value) {
+  x@age <- value
+  x
+})
+
+age(john) <- 50
+age(john)

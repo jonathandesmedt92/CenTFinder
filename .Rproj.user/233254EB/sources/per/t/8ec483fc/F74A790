@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553166654180.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1023429877",
+    "id" : "F74A790",
+    "lastKnownWriteTime" : 1553367680,
+    "last_content_update" : 1553367680424,
+    "path" : "~/CenTFinder/R/class_definitions.R",
+    "project_path" : "R/class_definitions.R",
+    "properties" : {
+        "cursorPosition" : "40,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

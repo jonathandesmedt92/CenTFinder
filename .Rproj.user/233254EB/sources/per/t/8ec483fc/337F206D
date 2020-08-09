@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553277998830.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "888073747",
+    "id" : "337F206D",
+    "lastKnownWriteTime" : 1526305854,
+    "last_content_update" : 1526305854,
+    "path" : "/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Scripts/Microarrray analysis 14052018.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "52,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

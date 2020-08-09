@@ -1,0 +1,43 @@
+########################################################
+###   CenTFinder                                     ###
+###   Class definitions                              ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+# Set old classes
+
+setOldClass("hclust")
+
+# Class for CenTFinder
+
+CenTFinder<-setClass("CenTFinder",
+         slots = c(
+           data = "matrix",
+           sample_annotation = "data.frame",
+           platforms = "data.frame",
+           probe_annotations = "list",
+           filtered_data = "matrix",
+           DE = "data.frame",
+           ChipSeq = "data.frame",
+           plots = "list",
+           power = "numeric",
+           TOM = "matrix",
+           tree = "hclust",
+           module_colors = "character",
+           gene_cluster_annotation = "data.frame",
+           kMEs = "data.frame",
+           GO = "list",
+           KEGG = "list",
+           motif_enrichment = "data.frame",
+           regulons = "data.frame",
+           cytoscape_networks = "data.frame",
+           markers = "list"
+         ))
+
+
+
+
+
+
+

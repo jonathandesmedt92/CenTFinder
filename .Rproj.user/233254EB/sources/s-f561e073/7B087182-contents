@@ -1,0 +1,135 @@
+# Overlap between RNAseq and WGCNA
+# Version 23052018
+
+# Read in the data
+
+library(dplyr)
+library(ggplot2)
+
+wgcna<-list()
+files<-list.files(path = "/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Experiment_design")
+for(i in 1:length(files)){
+  wgcna[[i]]<-read.table(file = paste("/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Experiment_design/",files[i],sep = ""))
+  wgcna[[i]][]<-lapply(wgcna[[i]],as.character)
+}
+
+wgcna<-bind_rows(wgcna)
+wgcna<-data.frame(wgcna,stringsAsFactors = F)
+
+rnaseq<-read.table("/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/RNAseq/Single-end/Results/diff_genes_LSEC_vs_ETV2.txt",stringsAsFactors = F,header = T)
+rnaseq<-rnaseq[!is.na(rnaseq$Gene),]
+humantfs<-read.table("allhumantfs.txt",sep="\t",stringsAsFactors = F,header = T)
+
+# rnaseq tfs
+
+rnaseqtfs<-rnaseq[rnaseq$Gene%in%humantfs$Symbol,]
+
+# overlap rnaseq and wgcna
+
+overlap<-merge(wgcna,rnaseq,by.x="tf",by.y="Gene",all=F)
+overlap$Log2FC<-as.numeric(overlap$Log2FC)
+overlap$log2FoldChange<-as.numeric(overlap$log2FoldChange)
+names(overlap)<-c("TF","Markers","kME","Cluster","Log2FC_microarray","baseMean","Log2FC_RNAseq","lfcSE","stat","pvalue","padj")
+overlap$kME<-as.numeric(overlap$kME)
+
+ggplot(overlap,aes(x=Log2FC_microarray,y=Log2FC_RNAseq))+
+  geom_point()+
+  theme_bw()
+
+# Opposite trends most likely indicate overshoot in either direction
+
+overlap$overshooting<-sign(overlap$Log2FC_microarray)!=sign(overlap$Log2FC_RNAseq)
+
+ggplot(overlap[abs(overlap$Log2FC_microarray)>1&abs(overlap$Log2FC_RNAseq)>1&overshooting==F,],aes(x=Log2FC_microarray,y=Log2FC_RNAseq))+
+  geom_point()+
+  theme_bw()
+
+View(overlap[abs(overlap$Log2FC_microarray)>1&abs(overlap$Log2FC_RNAseq)>1&overshooting==F,])
+subset<-overlap[abs(overlap$Log2FC_microarray)>1&abs(overlap$Log2FC_RNAseq)>1&overshooting==F&abs(overlap$Log2FC_RNAseq)>1&abs(overlap$kME)>0.6,]
+
+subset2<-subset[!duplicated(subset$TF),]
+ggplot(subset2,aes(x=kME,y=Log2FC_RNAseq))+
+  theme_bw()+
+  scale_x_continuous(breaks = seq(-1,1,0.1))+
+  geom_text(label=subset2$TF)
+
+# Only RNAseq
+
+onlyrnaseq<-rnaseqtfs[!rnaseqtfs$Gene%in%wgcna$tf,]
+
+
+# Generate master cytoscape file
+
+markercyto<-read.csv("Merged Network default edge.csv")
+markercyto<-markercyto[,c("Regulator.Gene","Target.Gene")]
+
+# overlap with misregulated tfs
+
+markercyto<-markercyto[markercyto$Regulator.Gene%in%rnaseqtfs$Gene,]
+write.table(markercyto,"markers_iregulon_iregulon_diffexRNAseq.txt",sep = "\t",row.names = F,quote = F)
+
+# Subset the cluster cytoscape files with only the tfs that are iRegulon enriched and differentially expressed
+
+setwd("/mnt/nfs/data/u0104718/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Preprocessed_data")
+
+gene_cluster_annot<-read.table("Gene_cluster_annotation.txt",sep = "\t",stringsAsFactors = F, header = T)
+datkme<-read.table("datKME.txt",sep = "\t",stringsAsFactors = F, header = T)
+
+gene_cluster_annot$KME<-NULL
+
+for(i in 1:nrow(gene_cluster_annot)){
+  gene_cluster_annot[i,"KME"]<-datkme[as.character(gene_cluster_annot[i,"Gene"]),paste("kME",as.character(gene_cluster_annot[i,"Cluster.color"]),sep="")]
+}
+
+# cutoff of 0.7
+gene_cluster_annot070<-gene_cluster_annot[abs(gene_cluster_annot$KME)>0.7,]
+
+markercyto2<-markercyto
+markercyto2<-markercyto2[markercyto2$Regulator.Gene%in%gene_cluster_annot070$Gene,]
+
+# Final listing
+
+final<-rnaseqtfs
+
+markercyto<-read.csv("Merged Network default edge.csv")
+markercyto<-markercyto[,c("Regulator.Gene","Target.Gene")]
+
+final$iRegulon_evidence<-final$Gene%in%markercyto$Regulator.Gene
+final$WGCNA_evidence<-final$Gene%in%gene_cluster_annot070$Gene
+final$both<-final$iRegulon_evidence+final$WGCNA_evidence
+
+write.table(final,"final_listing.txt",sep = "\t")
+
+final_network_2<-markercyto[markercyto$Regulator.Gene%in%as.character(final[final$both==2,"Gene"]),]
+final_network_1<-markercyto[markercyto$Regulator.Gene%in%as.character(final[final$both!=0,"Gene"]),]
+final_network_0<-markercyto[markercyto$Regulator.Gene%in%final$Gene,]
+
+final_network_2<-final_network_2[final_network_2$Regulator.Gene%in%rnaseq$Gene&final_network_2$Target.Gene%in%rnaseq$Gene,]
+final_network_1<-final_network_1[final_network_1$Regulator.Gene%in%rnaseq$Gene&final_network_1$Target.Gene%in%rnaseq$Gene,]
+final_network_0<-final_network_0[final_network_0$Regulator.Gene%in%rnaseq$Gene&final_network_0$Target.Gene%in%rnaseq$Gene,]
+
+rest<-final[final$both==1&!final$Gene%in%final_network_1$Regulator.Gene,]
+rest<-merge(rest,gene_cluster_annot,by="Gene",all=F)
+rest<-rest[order(abs(rest$KME),decreasing = T),]
+rest_prior<-rest[abs(rest$KME)>0.85&abs(rest$log2FoldChange)>5,]
+
+write.table(final_network_2,"final_network_2.txt",sep="\t",row.names = F, quote = F)
+write.table(final_network_1,"final_network_1.txt",sep="\t",row.names = F, quote = F)
+write.table(final_network_0,"final_network_0.txt",sep="\t",row.names = F, quote = F)
+write.table(rest,"only_wgcna_evidence_diffex.txt",sep = "\t")
+write.table(rest_prior,"only_wgcna_evidence_diffex_priority.txt",sep = "\t")
+
+
+# Merge with differential expression
+
+final_2_diffex<-rnaseq[rnaseq$Gene%in%final_network_2$Regulator.Gene|rnaseq$Gene%in%final_network_2$Target.Gene,]
+final_2_diffex<-merge(final_2_diffex,gene_cluster_annot,by="Gene",all.x=T,all.y=F)
+
+final_1_diffex<-rnaseq[rnaseq$Gene%in%final_network_1$Regulator.Gene|rnaseq$Gene%in%final_network_1$Target.Gene,]
+final_1_diffex<-merge(final_1_diffex,gene_cluster_annot,by="Gene",all.x=T,all.y=F)
+
+write.table(final_2_diffex,"final_2_differential_expression.txt",sep = "\t")
+write.table(final_1_diffex,"final_1_differential_expression.txt",sep = "\t")
+
+
+

@@ -1,0 +1,248 @@
+# SCENIC analysis
+# v31012019
+
+# Installation and setup
+
+source("https://bioconductor.org/biocLite.R")
+biocLite(c("GENIE3", "RcisTarget", "AUCell"))
+
+# Recommended to run AUCell:
+biocLite(c("mixtools"))
+# To visualize the binary matrices and perform t-SNEs:
+biocLite(c("NMF", "Rtsne", "R2HTML"))
+# To support paralell execution:
+biocLite(c("doMC", "doRNG"))
+# To visualize in http://scope.aertslab.org
+install.packages("devtools")
+devtools::install_github("aertslab/SCopeLoomR", build_vignettes = TRUE)
+
+packageVersion("AUCell")
+packageVersion("RcisTarget")
+packageVersion("GENIE3")
+
+# Install SCENIC
+devtools::install_github("aertslab/SCENIC")
+
+# Download DBs
+
+dbFiles <- c("https://resources.aertslab.org/cistarget/databases/homo_sapiens/hg19/refseq_r45/mc9nr/gene_based/hg19-500bp-upstream-7species.mc9nr.feather",
+             "https://resources.aertslab.org/cistarget/databases/homo_sapiens/hg19/refseq_r45/mc9nr/gene_based/hg19-tss-centered-10kb-7species.mc9nr.feather")
+
+dbFiles <- c("https://resources.aertslab.org/cistarget/databases/mus_musculus/mm9/refseq_r45/mc9nr/gene_based/mm9-500bp-upstream-7species.mc9nr.feather",
+             "https://resources.aertslab.org/cistarget/databases/mus_musculus/mm9/refseq_r45/mc9nr/gene_based/mm9-tss-centered-10kb-7species.mc9nr.feather")
+for(featherURL in dbFiles)
+{
+  download.file(featherURL, destfile=basename(featherURL)) # saved in current dir
+  descrURL <- gsub(".feather$", ".descr", featherURL)
+  if(file.exists(descrURL)) download.file(descrURL, destfile=basename(descrURL))
+}
+
+# Download sample dataset
+# dir.create("SCENIC_MouseBrain"); setwd("SCENIC_MouseBrain") # if needed
+
+# (This may take a few minutes)
+library(GEOquery)
+geoFile <- getGEOSuppFiles("GSE60361", makeDirectory=FALSE)
+gzFile <- grep("Expression", basename(rownames(geoFile)), value=TRUE)
+txtFile <- gsub(".gz", "", gzFile)
+gunzip(gzFile, destname=txtFile, remove=TRUE)
+
+library(data.table)
+geoData <- fread(txtFile, sep="\t")
+geneNames <- unname(unlist(geoData[,1, with=FALSE]))
+exprMatrix <- as.matrix(geoData[,-1, with=FALSE])
+rm(geoData)
+dim(exprMatrix)
+rownames(exprMatrix) <- geneNames
+exprMatrix[1:5,1:4]
+
+# Remove file downloaded:
+file.remove(txtFile)
+
+cellLabels <- paste(file.path(system.file('examples', package='AUCell')), "mouseBrain_cellLabels.tsv", sep="/")
+cellLabels <- read.table(cellLabels, row.names=1, header=TRUE, sep="\t")
+cellLabels <- as.data.frame(cellLabels)
+colnames(cellLabels) <- "CellType"
+
+exprMatrix <- exprMatrix[unique(rownames(exprMatrix)),] # Remove duplicated rows
+dim(exprMatrix)
+exprMat<-exprMatrix
+
+library(SingleCellExperiment)
+sceMouseBrain <- SingleCellExperiment(assays = list(counts = exprMatrix),
+                                      colData=data.frame(cellLabels[colnames(exprMatrix),, drop=FALSE]))
+
+# setwd("SCENIC_MouseBrain")
+dir.create("data")
+save(sceMouseBrain, file="data/sceMouseBrain.RData")
+
+
+# Initialise SCENIC settings
+
+library(GENIE3)
+library(RcisTarget)
+library(AUCell)
+library(SCENIC)
+org="mgi" # or hgnc, or dmel
+dbDir="databases" # RcisTarget databases location
+myDatasetTitle="SCENIC example on Mouse brain" # choose a name for your analysis
+data(defaultDbNames)
+dbs <- defaultDbNames[[org]]
+scenicOptions <- initializeScenic(org=org, dbDir=dbDir, dbs=dbs, datasetTitle=myDatasetTitle, nCores=20) # Best to put cores a bit less
+
+
+# Pipeline
+# 1. Building the gene regulatory network (GRN):
+  
+# 1.1 Identify potential targets for each TF based on co-expression.
+# 1.1.1 Filtering the expression matrix and running GENIE3/GRNBoost.
+genesKept <- geneFiltering(exprMat, scenicOptions=scenicOptions,
+                           minCountsPerGene=3*.01*ncol(exprMat),
+                           minSamples=ncol(exprMat)*.01)
+interestingGenes <- c("Neurod1", "Sox10", "Dlx1")
+interestingGenes[which(!interestingGenes %in% genesKept)]
+exprMat_filtered <- exprMat[genesKept, ]
+dim(exprMat_filtered)
+rm(exprMat)
+
+corrMat <- cor(t(exprMat_filtered), method="spearman")
+# (Only the rows for TFs will be needed needed):
+allTFs <- getDbTfs(scenicOptions)
+corrMat <- corrMat[which(rownames(corrMat) %in% allTFs),]
+saveRDS(corrMat, file=getIntName(scenicOptions, "corrMat"))
+
+# # Genie3
+# exprMat_filtered <- log2(exprMat_filtered+1) 
+# runGenie3(exprMat = exprMat_filtered[1:100,1:200], scenicOptions, nCores=30, verbose=T)
+# 
+# test<-exprMat_filtered[1:500,]
+# regs<-allTFs[allTFs%in%rownames(test)]
+# targs<-rownames(test)[!rownames(test)%in%allTFs]
+# 
+# a<-Sys.time()
+# genietest<-GENIE3(exprMat = test, 
+#        regulators = regs,
+#        targets = targs,
+#        nCores = 20,
+#        verbose = T)
+# b<-Sys.time()
+# b-a
+
+# GRNboost (run local)
+# Optional: add log (if it is not logged/normalized already)
+exprMat_filtered <- log2(exprMat_filtered+1)
+
+# Save TF list and expression matrix as text
+# exportsForGRNBoost(exprMat_filtered, scenicOptions) # Doesnt work yet
+transp_expr<-t(exprMat_filtered)
+dir.create("GRNboost")
+write.table(transp_expr,"GRNboost/transposed_expression_matrix.tsv",sep = "\t")
+
+tflist<-data.frame(TF = allTFs,stringsAsFactors = F)
+write.table(tflist,"GRNboost/tflist.tsv",sep = "\t")
+
+# GRNBoost2 ran about 6 hours locally on a PC with 2 cores and 16GB internal RAM (for +-12,000 genes and 3,000 cells)
+
+# 1.1.2 Formatting the targets from GENIE3/GRNBoost into co-expression modules.
+network<-read.table("int/network.tsv",sep = "\t",stringsAsFactors = F, header = F)
+names(network)<-c("TF","Target","weight")
+saveRDS(network, "int/1.4_GENIE3_linkList.Rds")
+runSCENIC_1_coexNetwork2modules(scenicOptions)
+
+# 1.2 Select potential direct-binding targets (regulons) based on DNA-motif analysis (RcisTarget: TF motif analysis)
+
+runSCENIC_2_createRegulons(scenicOptions)
+
+# 2. Identify cell states:
+  
+# 2.1 Analyzing the network activity in each individual cell (AUCell)
+# 2.1.1 Scoring regulons in the cells (calculate AUC)
+runSCENIC_3_scoreCells(scenicOptions, exprMat_filtered)
+# 2.1.2 Optional: Convert the network activity into ON/OFF (binary activity matrix)
+
+scenicOptions@settings$seed <- 123 # same seed for all of them
+# Run t-SNE with different settings:
+fileNames <- tsneAUC(scenicOptions, aucType="AUC", nPcs=c(5,15,50), perpl=c(5,15,50))
+fileNames <- tsneAUC(scenicOptions, aucType="AUC", nPcs=c(5,15,50), perpl=c(5,15,50), onlyHighConf=TRUE, filePrefix="int/tSNE_oHC")
+# Plot as pdf (individual files in int/): 
+fileNames <- paste0("int/",grep(".Rds", grep("tSNE_", list.files("int"), value=T), value=T))
+plotTsne_compareSettings(fileNames, scenicOptions, showLegend=FALSE)
+
+aucellApp <- plotTsne_AUCellApp(scenicOptions, exprMat_filtered)
+
+
+# 2.2 Identify stable cell states based on their gene regulatory network activity (cell clustering) and exploring the results…
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+scenicOptions@settings$seed <- 123 # same seed for all of them
+# Run t-SNE with different settings:
+fileNames <- tsneAUC(scenicOptions, aucType="AUC", nPcs=c(5,15,50), perpl=c(5,15,50,60,70))
+fileNames <- tsneAUC(scenicOptions, aucType="AUC", nPcs=c(5,15,50), perpl=c(5,15,50), onlyHighConf=TRUE, filePrefix="int/tSNE_oHC")
+# Plot as pdf (individual files in int/): 
+fileNames <- paste0("int/",grep(".Rds", grep("tSNE_", list.files("int"), value=T), value=T))
+plotTsne_compareSettings(fileNames, scenicOptions, showLegend=FALSE)
+
+
+
+
+
+par(mfcol=c(3,5))
+fileNames <- paste0("int/",grep(".Rds", grep("tSNE_AUC", list.files("int"), value=T, perl = T), value=T))
+plotTsne_compareSettings(fileNames, scenicOptions, showLegend=FALSE, cex=.5)
+
+
+
+logMat <- exprMat # Better if it is logged/normalized
+aucellApp <- plotTsne_AUCellApp(scenicOptions, logMat)
+savedSelections <- shiny::runApp(aucellApp)
+
+# Save the modified thresholds:
+newThresholds <- savedSelections$thresholds
+scenicOptions@fileNames$int["aucell_thresholds",1] <- "int/newThresholds.Rds"
+saveRDS(newThresholds, file=getIntName(scenicOptions, "aucell_thresholds"))
+saveRDS(scenicOptions, file="int/scenicOptions.Rds") 
+
+
+runSCENIC_4_aucell_binarize(scenicOptions)
+
+
+logMat <- exprMat # Better if it is logged/normalized
+aucellApp <- plotTsne_AUCellApp(scenicOptions, logMat) #default t-SNE
+savedSelections <- shiny::runApp(aucellApp)
+
+tSNE_scenic <- readRDS(tsneFileName(scenicOptions))
+aucell_regulonAUC <- loadInt(scenicOptions, "aucell_regulonAUC")
+
+# Show TF expression:
+par(mfrow=c(2,3))
+AUCell::AUCell_plotTSNE(tSNE_scenic$Y, exprMat, aucell_regulonAUC[onlyNonDuplicatedExtended(rownames(aucell_regulonAUC))[c("Dlx1", "Sox10", "Neurod1", "Sox9","Irf1", "Maf")],], plots="Expression")
+
+
+#par(bg = "black")
+par(mfrow=c(1,2))
+
+regulonNames <- c( "Dlx1","Sox9")
+cellCol <- plotTsne_rgb(scenicOptions, regulonNames, aucType="AUC", aucMaxContrast=0.6)
+text(-30,-25, attr(cellCol,"red"), col="red", cex=.7, pos=4)
+text(-30,-25-4, attr(cellCol,"green"), col="green3", cex=.7, pos=4)
+
+regulonNames <- list(red=c("Sox10", "Sox8"),
+                     green=c("Maf"),
+                     blue=c( "Neurod2"))
+cellCol <- plotTsne_rgb(scenicOptions, regulonNames, aucType="Binary")
+text(-30,-25, attr(cellCol,"red"), col="red", cex=.7, pos=4)
+text(-30,-25-4, attr(cellCol,"green"), col="green3", cex=.7, pos=4)
+text(-30,-25-8, attr(cellCol,"blue"), col="blue", cex=.7, pos=4)
+

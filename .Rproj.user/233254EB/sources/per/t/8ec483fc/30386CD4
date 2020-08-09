@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553259088962.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2116833966",
+    "id" : "30386CD4",
+    "lastKnownWriteTime" : 1553420848,
+    "last_content_update" : 1553420848785,
+    "path" : "~/CenTFinder/R/method_definitions.R",
+    "project_path" : "R/method_definitions.R",
+    "properties" : {
+        "cursorPosition" : "84,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

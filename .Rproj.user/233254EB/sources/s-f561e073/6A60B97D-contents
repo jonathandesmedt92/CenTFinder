@@ -1,0 +1,580 @@
+"Accession_number"	"Species"	"Cell_type"	"File_name"	"Organism_part"
+"1"	"E-GEOD-12293_sdrf.txt"	"Homo sapiens"	"dorsolateral prefrontal cortex_endothelial"	"GSM309043.CEL"	"dorsolateral prefrontal cortex"
+"3"	"E-GEOD-12293_sdrf.txt"	"Homo sapiens"	"dorsolateral prefrontal cortex_endothelial"	"GSM309044.CEL"	"dorsolateral prefrontal cortex"
+"4"	"E-GEOD-12293_sdrf.txt"	"Homo sapiens"	"dorsolateral prefrontal cortex_endothelial"	"GSM309050.CEL"	"dorsolateral prefrontal cortex"
+"5"	"E-GEOD-12293_sdrf.txt"	"Homo sapiens"	"dorsolateral prefrontal cortex_endothelial"	"GSM309048.CEL"	"dorsolateral prefrontal cortex"
+"7"	"E-GEOD-12293_sdrf.txt"	"Homo sapiens"	"dorsolateral prefrontal cortex_endothelial"	"GSM309042.CEL"	"dorsolateral prefrontal cortex"
+"8"	"E-GEOD-12293_sdrf.txt"	"Homo sapiens"	"dorsolateral prefrontal cortex_endothelial"	"GSM309049.CEL"	"dorsolateral prefrontal cortex"
+"9"	"E-GEOD-12293_sdrf.txt"	"Homo sapiens"	"dorsolateral prefrontal cortex_endothelial"	"GSM309041.CEL"	"dorsolateral prefrontal cortex"
+"14"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"15"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"16"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"17"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"18"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"19"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"20"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"21"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"22"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"23"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"24"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"25"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"26"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"27"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"28"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"29"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"30"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"31"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"32"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"33"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"34"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"35"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"36"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"37"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"38"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"39"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"40"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"41"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"42"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"43"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"44"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"45"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"46"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"47"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"48"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"49"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"50"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"51"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"52"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"53"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"54"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"55"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"56"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"57"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"58"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"59"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"60"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"61"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"62"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"63"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"64"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"65"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"66"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"67"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"68"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"69"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"70"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"71"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"72"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"73"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"74"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"75"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"76"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"77"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601024.txt"	"pulmonary artery"
+"78"	"E-GEOD-1849_sdrf.txt"	"Homo sapiens"	"pulmonary artery_endothelial cell"	"E-GEOD-1849-processed-data-1472601031.txt"	"pulmonary artery"
+"79"	"E-GEOD-18521_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM458348.CEL"	"umbilical vein"
+"80"	"E-GEOD-18521_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM458350.CEL"	"umbilical vein"
+"81"	"E-GEOD-18521_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM458349.CEL"	"umbilical vein"
+"82"	"E-GEOD-18521_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM458347.CEL"	"umbilical vein"
+"83"	"E-GEOD-18521_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM458346.CEL"	"umbilical vein"
+"84"	"E-GEOD-18521_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM458345.CEL"	"umbilical vein"
+"95"	"E-GEOD-18913_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM468603.CEL"	"umbilical vein"
+"96"	"E-GEOD-18913_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM468604.CEL"	"umbilical vein"
+"97"	"E-GEOD-18913_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM468609.CEL"	"umbilical vein"
+"98"	"E-GEOD-18913_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM468610.CEL"	"umbilical vein"
+"99"	"E-GEOD-18913_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM468611.CEL"	"umbilical vein"
+"100"	"E-GEOD-18913_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM468615.CEL"	"umbilical vein"
+"101"	"E-GEOD-18913_sdrf.txt"	"Homo sapiens"	"umbilical vein_endothelial"	"GSM468616.CEL"	"umbilical vein"
+"117"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"coronary artery Endothelial Cells"	"GSM530378.CEL"	NA
+"118"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"coronary artery Endothelial Cells"	"GSM530377.CEL"	NA
+"119"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"coronary artery Endothelial Cells"	"GSM530376.CEL"	NA
+"120"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"coronary artery Endothelial Cells"	"GSM530375.CEL"	NA
+"121"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Pulmonary Artery Endothelial Cells"	"GSM530374.CEL"	NA
+"122"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Pulmonary Artery Endothelial Cells"	"GSM530373.CEL"	NA
+"123"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Pulmonary Artery Endothelial Cells"	"GSM530372.CEL"	NA
+"124"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Pulmonary Artery Endothelial Cells"	"GSM530371.CEL"	NA
+"125"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Aortic Endothelial Cells"	"GSM530370.CEL"	NA
+"126"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Aortic Endothelial Cells"	"GSM530369.CEL"	NA
+"127"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Aortic Endothelial Cells"	"GSM530368.CEL"	NA
+"128"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Aortic Endothelial Cells"	"GSM530367.CEL"	NA
+"129"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Microvascular Endothelial"	"GSM530366.CEL"	NA
+"130"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Microvascular Endothelial"	"GSM530365.CEL"	NA
+"131"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Microvascular Endothelial"	"GSM530364.CEL"	NA
+"132"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Microvascular Endothelial"	"GSM530363.CEL"	NA
+"133"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Umbilical Vein Endothelial Cells"	"GSM530362.CEL"	NA
+"134"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Umbilical Vein Endothelial Cells"	"GSM530361.CEL"	NA
+"135"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Umbilical Vein Endothelial Cells"	"GSM530360.CEL"	NA
+"136"	"E-GEOD-21212_sdrf.txt"	"Homo sapiens"	"Umbilical Vein Endothelial Cells"	"GSM530359.CEL"	NA
+"137"	"E-GEOD-21458_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM536214_sample_table.txt"	NA
+"138"	"E-GEOD-21458_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM536213_sample_table.txt"	NA
+"139"	"E-GEOD-21458_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM536212_sample_table.txt"	NA
+"140"	"E-GEOD-21458_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM536211_sample_table.txt"	NA
+"141"	"E-GEOD-21458_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM536210_sample_table.txt"	NA
+"142"	"E-GEOD-21458_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM536209_sample_table.txt"	NA
+"143"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663509.CEL"	"bone marrow"
+"144"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663508.CEL"	"bone marrow"
+"145"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663507.CEL"	"bone marrow"
+"146"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663506.CEL"	"bone marrow"
+"147"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663505.CEL"	"bone marrow"
+"148"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663504.CEL"	"bone marrow"
+"149"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663503.CEL"	"bone marrow"
+"150"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663502.CEL"	"bone marrow"
+"151"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663501.CEL"	"bone marrow"
+"152"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"bone marrow_CD133+ endothelial progenitor cells (EPCs)"	"GSM663500.CEL"	"bone marrow"
+"153"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663499.CEL"	"Peripheral Blood"
+"154"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663498.CEL"	"Peripheral Blood"
+"155"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663497.CEL"	"Peripheral Blood"
+"156"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663496.CEL"	"Peripheral Blood"
+"157"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663495.CEL"	"Peripheral Blood"
+"158"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663494.CEL"	"Peripheral Blood"
+"159"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663493.CEL"	"Peripheral Blood"
+"160"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663492.CEL"	"Peripheral Blood"
+"161"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663491.CEL"	"Peripheral Blood"
+"162"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663490.CEL"	"Peripheral Blood"
+"163"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663489.CEL"	"Peripheral Blood"
+"164"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663488.CEL"	"Peripheral Blood"
+"165"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663487.CEL"	"Peripheral Blood"
+"166"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663486.CEL"	"Peripheral Blood"
+"167"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663485.CEL"	"Peripheral Blood"
+"168"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663484.CEL"	"Peripheral Blood"
+"169"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663483.CEL"	"Peripheral Blood"
+"170"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663482.CEL"	"Peripheral Blood"
+"171"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663481.CEL"	"Peripheral Blood"
+"172"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663480.CEL"	"Peripheral Blood"
+"173"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663479.CEL"	"Peripheral Blood"
+"174"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663478.CEL"	"Peripheral Blood"
+"175"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663477.CEL"	"Peripheral Blood"
+"176"	"E-GEOD-23203_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663476.CEL"	"Peripheral Blood"
+"177"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646834.CEL"	NA
+"178"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646833.CEL"	NA
+"179"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646832.CEL"	NA
+"180"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646831.CEL"	NA
+"181"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646830.CEL"	NA
+"182"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646829.CEL"	NA
+"183"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646828.CEL"	NA
+"184"	"E-GEOD-26341_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cells"	"GSM646827.CEL"	NA
+"187"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663499.CEL"	"Peripheral Blood"
+"188"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663498.CEL"	"Peripheral Blood"
+"189"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663497.CEL"	"Peripheral Blood"
+"190"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663496.CEL"	"Peripheral Blood"
+"191"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663495.CEL"	"Peripheral Blood"
+"192"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663494.CEL"	"Peripheral Blood"
+"193"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663493.CEL"	"Peripheral Blood"
+"194"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663492.CEL"	"Peripheral Blood"
+"195"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663491.CEL"	"Peripheral Blood"
+"196"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663490.CEL"	"Peripheral Blood"
+"197"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663489.CEL"	"Peripheral Blood"
+"198"	"E-GEOD-26950_sdrf.txt"	"Homo sapiens"	"Peripheral Blood_endothelial progenitor cells (EPCs)/myeloid circulating angiogenic cells (CACs)"	"GSM663488.CEL"	"Peripheral Blood"
+"199"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740061.CEL"	NA
+"200"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740060.CEL"	NA
+"201"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740059.CEL"	NA
+"202"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740058.CEL"	NA
+"203"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740057.CEL"	NA
+"204"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740056.CEL"	NA
+"205"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740055.CEL"	NA
+"206"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740054.CEL"	NA
+"207"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740053.CEL"	NA
+"208"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740052.CEL"	NA
+"209"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740051.CEL"	NA
+"210"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740050.CEL"	NA
+"211"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740049.CEL"	NA
+"212"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740048.CEL"	NA
+"213"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740047.CEL"	NA
+"214"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740046.CEL"	NA
+"215"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740045.CEL"	NA
+"216"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740044.CEL"	NA
+"217"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740043.CEL"	NA
+"218"	"E-GEOD-29881_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"GSM740042.CEL"	NA
+"228"	"E-GEOD-37044_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909290_S0119-184-HG-PB-EPC-FIR.CEL"	NA
+"229"	"E-GEOD-37044_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909289_S0119-183-HG-PB-EPC.CEL"	NA
+"230"	"E-GEOD-37045_sdrf.txt"	"Homo sapiens"	"Late endothelial precursor cell"	"GSM909293_S0119-136-UCB-lEPC.CEL"	NA
+"231"	"E-GEOD-37045_sdrf.txt"	"Homo sapiens"	"Late endothelial precursor cell"	"GSM909292_S0119-135-UCB-lEPC.CEL"	NA
+"232"	"E-GEOD-37045_sdrf.txt"	"Homo sapiens"	"Early endothelial precursor cell"	"GSM909291_S0119-139-UCB-eEPC.CEL"	NA
+"233"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Late endothelial precursor cell"	"GSM909293_S0119-136-UCB-lEPC.CEL"	NA
+"234"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Late endothelial precursor cell"	"GSM909292_S0119-135-UCB-lEPC.CEL"	NA
+"235"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Early endothelial precursor cell"	"GSM909291_S0119-139-UCB-eEPC.CEL"	NA
+"236"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909290_S0119-184-HG-PB-EPC-FIR.CEL"	NA
+"237"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909289_S0119-183-HG-PB-EPC.CEL"	NA
+"238"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909288_11268_FIR_S01_1_1_miRNA_FE.txt"	NA
+"239"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909288_11268_FIR_S01_1_1_GeneView.txt"	NA
+"240"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909287_11270_Ctrl_S01_1_2_miRNA_FE.txt"	NA
+"241"	"E-GEOD-37046_sdrf.txt"	"Homo sapiens"	"Endothelial precursor cell"	"GSM909287_11270_Ctrl_S01_1_2_GeneView.txt"	NA
+"242"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"243"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"244"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"245"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"246"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"247"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"248"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"249"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"250"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"251"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"252"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"253"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"254"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"255"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"256"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"257"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"258"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"259"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"260"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027139.txt"	NA
+"261"	"E-GEOD-3891_sdrf.txt"	"Homo sapiens"	"microvascular endothelial cell"	"E-GEOD-3891-processed-data-1435027140.txt"	NA
+"262"	"E-GEOD-38961_sdrf.txt"	"Homo sapiens"	"outgrowth endothelial cells (OEC)"	"GSM952938_BC401_OEC.CEL"	NA
+"263"	"E-GEOD-38961_sdrf.txt"	"Homo sapiens"	"outgrowth endothelial cells (OEC)"	"GSM952937_LDS11_OEC.CEL"	NA
+"264"	"E-GEOD-38961_sdrf.txt"	"Homo sapiens"	"outgrowth endothelial cells (OEC)"	"GSM952936_BC14_OEC.CEL"	NA
+"265"	"E-GEOD-38961_sdrf.txt"	"Homo sapiens"	"outgrowth endothelial cells (OEC)"	"GSM952935_LDS5_OEC.CEL"	NA
+"266"	"E-GEOD-38961_sdrf.txt"	"Homo sapiens"	"outgrowth endothelial cells (OEC)"	"GSM952934_BC248.CEL"	NA
+"267"	"E-GEOD-38961_sdrf.txt"	"Homo sapiens"	"outgrowth endothelial cells (OEC)"	"GSM952933_LDS1.CEL"	NA
+"268"	"E-GEOD-43016_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM1055147_sample_table.txt"	NA
+"269"	"E-GEOD-43016_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM1055146_sample_table.txt"	NA
+"270"	"E-GEOD-43016_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM1055145_sample_table.txt"	NA
+"271"	"E-GEOD-43016_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM1055144_sample_table.txt"	NA
+"272"	"E-GEOD-43016_sdrf.txt"	"Homo sapiens"	"Human vein umbilical endothelial cells (HUVEC)"	"GSM1055143_sample_table.txt"	NA
+"273"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured hepatic vein endothelial cells"	"GSM1063411_HV3_6.CEL"	NA
+"274"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured hepatic vein endothelial cells"	"GSM1063410_HV2_5.CEL"	NA
+"275"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured hepatic vein endothelial cells"	"GSM1063409_HV1_4.CEL"	NA
+"276"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical vein endothelial cells"	"GSM1063408_HUVEC_F9_5.CEL"	NA
+"277"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical vein endothelial cells"	"GSM1063407_HUVEC_F7_14.CEL"	NA
+"278"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical vein endothelial cells"	"GSM1063406_HUVEC_F6_7.CEL"	NA
+"279"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical vein endothelial cells"	"GSM1063405_HUVEC_F5_6.CEL"	NA
+"280"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical vein endothelial cells"	"GSM1063404_HUVEC_C5_15.CEL"	NA
+"281"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical vein endothelial cells"	"GSM1063403_HUVEC_C4_6.CEL"	NA
+"282"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical vein endothelial cells"	"GSM1063402_HUVEC_C3_16.CEL"	NA
+"283"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical vein endothelial cells"	"GSM1063401_HUVEC_C2_15.CEL"	NA
+"284"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical vein endothelial cells"	"GSM1063400_HUVEC_C1_8.CEL"	NA
+"285"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical artery endothelial cells"	"GSM1063399_HUAEC_F8_3.CEL"	NA
+"286"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical artery endothelial cells"	"GSM1063398_HUAEC_F13_2.CEL"	NA
+"287"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical artery endothelial cells"	"GSM1063397_HUAEC_F12_10.CEL"	NA
+"288"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"freshly isolated umbilical artery endothelial cells"	"GSM1063396_HUAEC_F10_12.CEL"	NA
+"289"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical artery endothelial cells"	"GSM1063395_HUAEC_C6_3.CEL"	NA
+"290"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical artery endothelial cells"	"GSM1063394_HUAEC_C5_12.CEL"	NA
+"291"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical artery endothelial cells"	"GSM1063393_HUAEC_C3_11.CEL"	NA
+"292"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical artery endothelial cells"	"GSM1063392_HUAEC_C2_4.CEL"	NA
+"293"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured umbilical artery endothelial cells"	"GSM1063391_HUAEC_C1_3.CEL"	NA
+"294"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured pulmonary vein endothelial cells"	"GSM1063390_HPVE3_12.CEL"	NA
+"295"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured pulmonary vein endothelial cells"	"GSM1063389_HPVE2_4.CEL"	NA
+"296"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured pulmonary artery endothelial cells"	"GSM1063388_HPAE5_1.CEL"	NA
+"297"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured pulmonary artery endothelial cells"	"GSM1063387_HPAE4_9.CEL"	NA
+"298"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured pulmonary artery endothelial cells"	"GSM1063386_HPAE1_1.CEL"	NA
+"299"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured iliac vein endothelial cells"	"GSM1063385_HIVE5_14.CEL"	NA
+"300"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured iliac vein endothelial cells"	"GSM1063384_HIVE4_13.CEL"	NA
+"301"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured iliac vein endothelial cells"	"GSM1063383_HIVE1_5.CEL"	NA
+"302"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured iliac artery endothelial cells"	"GSM1063382_HIAE4_8.CEL"	NA
+"303"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured iliac artery endothelial cells"	"GSM1063381_HIAE1_10.CEL"	NA
+"304"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured coronary artery endothelial cells"	"GSM1063380_HCAEC2_9.CEL"	NA
+"305"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured coronary artery endothelial cells"	"GSM1063379_HCAE_C1_11.CEL"	NA
+"306"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured aorta endothelial cells"	"GSM1063378_HAEC2_9.CEL"	NA
+"307"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured aorta endothelial cells"	"GSM1063377_HAEC1_2.CEL"	NA
+"308"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured hepatic artery endothelial cells"	"GSM1063376_HA3_2.CEL"	NA
+"309"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured hepatic artery endothelial cells"	"GSM1063375_HA2_1.CEL"	NA
+"310"	"E-GEOD-43475_sdrf.txt"	"Homo sapiens"	"cultured hepatic artery endothelial cells"	"GSM1063374_HA1_7.CEL"	NA
+"313"	"E-GEOD-43742_sdrf.txt"	"Homo sapiens"	"neonatal human dermal microvascular endothelial cells"	"GSM1070121_sample_table.txt"	NA
+"314"	"E-GEOD-43742_sdrf.txt"	"Homo sapiens"	"neonatal human dermal microvascular endothelial cells"	"GSM1070120_sample_table.txt"	NA
+"315"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1084005_male_ECV_98_7_b_12_HuGene-1_0-st-v1_.CEL"	"placenta"
+"316"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1084004_male_ECV_92_5_c_10_HuGene-1_0-st-v1_.CEL"	"placenta"
+"317"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1084003_male_ECV_117_6_c_16_HuGene-1_0-st-v1_.CEL"	"placenta"
+"318"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1084002_male_ECA_100_8_b_13_HuGene-1_0-st-v1_.CEL"	"placenta"
+"319"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1084001_male_ECA_98_7_b_11_HuGene-1_0-st-v1_.CEL"	"placenta"
+"320"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1084000_male_ECA_92_5_b_9_HuGene-1_0-st-v1_.CEL"	"placenta"
+"321"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1083999_male_ECA_117_7_b_15_HuGene-1_0-st-v1_.CEL"	"placenta"
+"322"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1083998_male_ECV_100_8_b_14_HuGene-1_0-st-v1_.CEL"	"placenta"
+"323"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1083997_female_ECV_84_5_b_2_HuGene-1_0-st-v1_.CEL"	"placenta"
+"324"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1083996_female_ECV_135_6_b_8_HuGene-1_0-st-v1_.CEL"	"placenta"
+"325"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1083995_female_ECV_127_8_b_6_HuGene-1_0-st-v1_.CEL"	"placenta"
+"326"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_venous endothelial cells"	"GSM1083994_female_ECV_105_6_b_4_HuGene-1_0-st-v1_.CEL"	"placenta"
+"327"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1083993_female_ECA_84_7_b_1_HuGene-1_0-st-v1_.CEL"	"placenta"
+"328"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1083992_female_ECA_135_5_a_7_HuGene-1_0-st-v1_.CEL"	"placenta"
+"329"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1083991_female_ECA_127_5_a_5_HuGene-1_0-st-v1_.CEL"	"placenta"
+"330"	"E-GEOD-44368_sdrf.txt"	"Homo sapiens"	"placenta_arterial endothelial cells"	"GSM1083990_female_ECA_105_5_b_3_HuGene-1_0-st-v1_.CEL"	"placenta"
+"347"	"E-GEOD-44596_sdrf.txt"	"Homo sapiens"	"primary coronary artery endothelial"	"GSM1087603_C3_041311_SL_HGU133P2_041411.CEL"	NA
+"348"	"E-GEOD-44596_sdrf.txt"	"Homo sapiens"	"primary coronary artery endothelial"	"GSM1087602_C2_041311_SL_HGU133P2_041411.CEL"	NA
+"349"	"E-GEOD-44596_sdrf.txt"	"Homo sapiens"	"primary coronary artery endothelial"	"GSM1087601_C1_041311_SL_HGU133P2_041411.CEL"	NA
+"350"	"E-GEOD-44596_sdrf.txt"	"Homo sapiens"	"primary coronary artery endothelial"	"GSM1087600_S3_041311_SL_HGU133P2_041411.CEL"	NA
+"351"	"E-GEOD-44596_sdrf.txt"	"Homo sapiens"	"primary coronary artery endothelial"	"GSM1087599_S2_041311_SL_HGU133P2_041411.CEL"	NA
+"352"	"E-GEOD-44596_sdrf.txt"	"Homo sapiens"	"primary coronary artery endothelial"	"GSM1087598_S1_041311_SL_HGU133P2_041411.CEL"	NA
+"353"	"E-GEOD-44597_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087607_DMSO4_092810_SL_HGU133P2_092910.CEL"	NA
+"354"	"E-GEOD-44597_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087606_DMSO3_092810_SL_HGU133P2_092910.CEL"	NA
+"355"	"E-GEOD-44597_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087605_SSNB2_092810_SL_HGU133P2_092910.CEL"	NA
+"356"	"E-GEOD-44597_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087604_SSNB1_092810_SL_HGU133P2_092910.CEL"	NA
+"357"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087607_DMSO4_092810_SL_HGU133P2_092910.CEL"	NA
+"358"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087606_DMSO3_092810_SL_HGU133P2_092910.CEL"	NA
+"359"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087605_SSNB2_092810_SL_HGU133P2_092910.CEL"	NA
+"360"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Umbilical Vein Endothelial Cells"	"GSM1087604_SSNB1_092810_SL_HGU133P2_092910.CEL"	NA
+"361"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Coronary Artery Endothelial Cells"	"GSM1087603_C3_041311_SL_HGU133P2_041411.CEL"	NA
+"362"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Coronary Artery Endothelial Cells"	"GSM1087602_C2_041311_SL_HGU133P2_041411.CEL"	NA
+"363"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Coronary Artery Endothelial Cells"	"GSM1087601_C1_041311_SL_HGU133P2_041411.CEL"	NA
+"364"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Coronary Artery Endothelial Cells"	"GSM1087600_S3_041311_SL_HGU133P2_041411.CEL"	NA
+"365"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Coronary Artery Endothelial Cells"	"GSM1087599_S2_041311_SL_HGU133P2_041411.CEL"	NA
+"366"	"E-GEOD-44598_sdrf.txt"	"Homo sapiens"	"Primary Human Coronary Artery Endothelial Cells"	"GSM1087598_S1_041311_SL_HGU133P2_041411.CEL"	NA
+"367"	"E-GEOD-44856_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVECs)"	"GSM1092654_Hs_TTR4_B208_sconstantino_IMM_JS.ga.cel"	NA
+"368"	"E-GEOD-44856_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVECs)"	"GSM1092653_Hs_TTR3_B207_sconstantino_IMM_JS.ga.cel"	NA
+"369"	"E-GEOD-44856_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVECs)"	"GSM1092652_Hs_TTR2_B206_sconstantino_IMM_JS.ga.cel"	NA
+"370"	"E-GEOD-44856_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVECs)"	"GSM1092651_Hs_WT4_B204_sconstantino_IMM_JS.ga.cel"	NA
+"371"	"E-GEOD-44856_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVECs)"	"GSM1092650_Hs_WT3_B203_sconstantino_IMM_JS.ga.cel"	NA
+"372"	"E-GEOD-44856_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVECs)"	"GSM1092649_Hs_WT1_B201_sconstantino_IMM_JS.ga.cel"	NA
+"373"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099439_F5AS_12.CEL"	NA
+"374"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099438_F5AS_11.CEL"	NA
+"375"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099437_F10PS_10.CEL"	NA
+"376"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099436_F10PS_09.CEL"	NA
+"377"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099435_F10AS_08.CEL"	NA
+"378"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099434_F10AS_07.CEL"	NA
+"379"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099433_F1PS_06.CEL"	NA
+"380"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099432_F1PS_05.CEL"	NA
+"381"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099431_F1AS_04.CEL"	NA
+"382"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099430_F1AS_03.CEL"	NA
+"383"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099429_F0AS_02.CEL"	NA
+"384"	"E-GEOD-45225_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1099428_F0AS_01.CEL"	NA
+"385"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128080_EM_01222009_16_HOF.CEL"	NA
+"386"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128079_EM_01222009_15_HOF.CEL"	NA
+"387"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128078_EM_01222009_14_HOF.CEL"	NA
+"388"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128077_EM_01282009_10_HOF.CEL"	NA
+"389"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128076_EM_01282009_9_HOF.CEL"	NA
+"390"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128075_EM_01292009_8_HOF.CEL"	NA
+"391"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128074_EM_01292009_7_HOF.CEL"	NA
+"392"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128073_EM_6_01292009_6_HOF.CEL"	NA
+"393"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128072_EM_01292009_5_HOF.CEL"	NA
+"394"	"E-GEOD-46279_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1128071_EM_01292009_1_HOF.CEL"	NA
+"395"	"E-GEOD-48786_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1184608_9_E4ORFSort3_UWS-KXX-120424-24-30585_6.CEL"	NA
+"396"	"E-GEOD-48786_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1184607_8_E4ORFSort2_UWS-KXX-120424-24-30585_5.CEL"	NA
+"397"	"E-GEOD-48786_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1184606_7_E4ORFSort1_UWS-KXX-120424-24-30585_4.CEL"	NA
+"398"	"E-GEOD-48786_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1184605_3_E4ORFCont3_UWS-KXX-120424-24-30585_3.CEL"	NA
+"399"	"E-GEOD-48786_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1184604_2_E4ORFCont2_UWS-KXX-120424-24-30585_2.CEL"	NA
+"400"	"E-GEOD-48786_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1184603_1_E4ORFCont1_UWS-KXX-120424-24-30585_1.CEL"	NA
+"401"	"E-GEOD-49426_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1199154_101207_05_NFAT24.CEL"	NA
+"402"	"E-GEOD-49426_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1199153_101207_04_co24.CEL"	NA
+"403"	"E-GEOD-49426_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1199152_101207_03_VEplusCsA1.CEL"	NA
+"404"	"E-GEOD-49426_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1199151_101207_02_VE1.CEL"	NA
+"405"	"E-GEOD-49426_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cells (HUVECs)"	"GSM1199150_101207_01_VE0.CEL"	NA
+"406"	"E-GEOD-49524_sdrf.txt"	"Homo sapiens"	"umbilical cord_primary endothelial cells from umbilical cord vein (HUVEC)"	"GSM1200456_GD3.CEL"	"umbilical cord"
+"407"	"E-GEOD-49524_sdrf.txt"	"Homo sapiens"	"umbilical cord_primary endothelial cells from umbilical cord vein (HUVEC)"	"GSM1200455_GD2.CEL"	"umbilical cord"
+"408"	"E-GEOD-49524_sdrf.txt"	"Homo sapiens"	"umbilical cord_primary endothelial cells from umbilical cord vein (HUVEC)"	"GSM1200454_GD1.CEL"	"umbilical cord"
+"409"	"E-GEOD-49524_sdrf.txt"	"Homo sapiens"	"umbilical cord_primary endothelial cells from umbilical cord vein (HUVEC)"	"GSM1200453_C3.CEL"	"umbilical cord"
+"410"	"E-GEOD-49524_sdrf.txt"	"Homo sapiens"	"umbilical cord_primary endothelial cells from umbilical cord vein (HUVEC)"	"GSM1200452_C2.CEL"	"umbilical cord"
+"411"	"E-GEOD-49524_sdrf.txt"	"Homo sapiens"	"umbilical cord_primary endothelial cells from umbilical cord vein (HUVEC)"	"GSM1200451_C1.CEL"	"umbilical cord"
+"412"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287244_RWX101025_Remaley_Vickers_HDL_WC2.CEL"	NA
+"413"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287243_RWX101025_Remaley_Vickers_HDL_WC1.CEL"	NA
+"414"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287229_RWX101025_Remaley_Vickers_HDL_C3.CEL"	NA
+"415"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287228_RWX101025_Remaley_Vickers_HDL_C2.CEL"	NA
+"416"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287227_RWX101025_Remaley_Vickers_HDL_C1.CEL"	NA
+"417"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287242_RWX101025_Remaley_Vickers_HDL_WAI-2-1.CEL"	NA
+"418"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287241_RWX101025_Remaley_Vickers_HDL_WAI-1-1.CEL"	NA
+"419"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287226_RWX101025_Remaley_Vickers_HDL_AI3A.CEL"	NA
+"420"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287225_RWX101025_Remaley_Vickers_HDL_AI2B.CEL"	NA
+"421"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287224_RWX101025_Remaley_Vickers_HDL_AI1B.CEL"	NA
+"422"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287237_RWX101025_Remaley_Vickers_HDL_DONOR5S2.CEL"	NA
+"423"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287236_RWX101025_Remaley_Vickers_HDL_DONOR4S3.CEL"	NA
+"424"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287235_RWX101025_Remaley_Vickers_HDL_DONOR3S3.CEL"	NA
+"425"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287234_RWX101025_Remaley_Vickers_HDL_DONOR2S3.CEL"	NA
+"426"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287233_RWX101025_Remaley_Vickers_HDL_DONOR1S1.CEL"	NA
+"427"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287246_RWX101025_Remaley_Vickers_HDL_WDISCS2-1.CEL"	NA
+"428"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287245_RWX101025_Remaley_Vickers_HDL_WDISCS1-1.CEL"	NA
+"429"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287232_RWX101025_Remaley_Vickers_HDL_DISCS3A.CEL"	NA
+"430"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287231_RWX101025_Remaley_Vickers_HDL_DISCS2B.CEL"	NA
+"431"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287230_RWX101025_Remaley_Vickers_HDL_DISCS1A.CEL"	NA
+"432"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287248_RWX101025_Remaley_Vickers_HDL_WVES2.CEL"	NA
+"433"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287247_RWX101025_Remaley_Vickers_HDL_WVES1.CEL"	NA
+"434"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287240_RWX101025_Remaley_Vickers_HDL_VES3.CEL"	NA
+"435"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287239_RWX101025_Remaley_Vickers_HDL_VES2.CEL"	NA
+"436"	"E-GEOD-53201_sdrf.txt"	"Homo sapiens"	"coronary artery endothelial cell"	"GSM1287238_RWX101025_Remaley_Vickers_HDL_VES1.CEL"	NA
+"440"	"E-GEOD-55170_sdrf.txt"	"Homo sapiens"	"human umbilical cord vein endothelial cells (HUVECs)"	"GSM1330723_HUVEC_Control_RNA.CEL"	NA
+"455"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358841_sample_table.txt"	NA
+"456"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358840_sample_table.txt"	NA
+"457"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358839_sample_table.txt"	NA
+"458"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358838_sample_table.txt"	NA
+"459"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358837_sample_table.txt"	NA
+"460"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358836_sample_table.txt"	NA
+"461"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358835_sample_table.txt"	NA
+"462"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358834_sample_table.txt"	NA
+"463"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358833_sample_table.txt"	NA
+"464"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358832_sample_table.txt"	NA
+"465"	"E-GEOD-56309_sdrf.txt"	"Homo sapiens"	"human umbilical vein endothelial cell"	"GSM1358831_sample_table.txt"	NA
+"466"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466666_osc_siFoxC2_C10.CEL"	NA
+"467"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466665_osc_siFoxC2_B4.CEL"	NA
+"468"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466664_osc_siAS_C9.CEL"	NA
+"469"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466663_osc_siAS_B3.CEL"	NA
+"470"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466662_stat_siFoxC2_C8.CEL"	NA
+"471"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466661_stat_siFoxC2_B2.CEL"	NA
+"472"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466660_stat_siAS_C7.CEL"	NA
+"473"	"E-GEOD-60152_sdrf.txt"	"Homo sapiens"	"Human intestinal lymphatic endothelial cells"	"GSM1466659_stat_siAS_B1.CEL"	NA
+"474"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620917_EA11024_280467_HG-U133_PLUS_2_OCD41_N3.CEL"	NA
+"475"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620916_EA11024_278244_HG-U133_PLUS_2_OCD33R_N3.CEL"	NA
+"476"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620915_EA11024_278243_HG-U133_PLUS_2_OCD32R_N3.CEL"	NA
+"477"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620914_EA11024_278242_HG-U133_PLUS_2_OCD31R.CEL"	NA
+"478"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620913_EA11024_278241_HG-U133_PLUS_2_OCD30R.CEL"	NA
+"479"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620912_EA11024_278240_HG-U133_PLUS_2_OCD29R.CEL"	NA
+"480"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620911_EA11024_278239_HG-U133_PLUS_2_OCD28R.CEL"	NA
+"481"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620910_EA11024_278238_HG-U133_PLUS_2_OCD26R.CEL"	NA
+"482"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620909_EA11024_278237_HG-U133_PLUS_2_OCD25R.CEL"	NA
+"483"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620908_EA11024_278236_HG-U133_PLUS_2_OCD24R_N2.CEL"	NA
+"484"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620907_EA11024_278235_HG-U133_PLUS_2_OCD23R.CEL"	NA
+"485"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620906_EA11024_278234_HG-U133_PLUS_2_OCD20R_N5.CEL"	NA
+"486"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620905_EA11024_278233_HG-U133_PLUS_2_OCD18R_N5.CEL"	NA
+"487"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620904_EA11024_278232_HG-U133_PLUS_2_OCD4R.CEL"	NA
+"488"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620903_EA11024_276036_HG-U133_PLUS_2_OCD60.CEL"	NA
+"489"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620902_EA11024_276035_HG-U133_PLUS_2_OCD59.CEL"	NA
+"490"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620901_EA11024_276034_HG-U133_PLUS_2_OCD58.CEL"	NA
+"491"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620900_EA11024_276033_HG-U133_PLUS_2_OCD57.CEL"	NA
+"492"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620899_EA11024_276032_HG-U133_PLUS_2_OCD56_N3.CEL"	NA
+"493"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620898_EA11024_276030_HG-U133_PLUS_2_OCD54_N3.CEL"	NA
+"494"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620897_EA11024_276029_HG-U133_PLUS_2_OCD53.CEL"	NA
+"495"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620896_EA11024_276028_HG-U133_PLUS_2_OCD52_N3.CEL"	NA
+"496"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620895_EA11024_276027_HG-U133_PLUS_2_OCD51.CEL"	NA
+"497"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620894_EA11024_276026_HG-U133_PLUS_2_OCD50_N3.CEL"	NA
+"498"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620893_EA11024_276025_HG-U133_PLUS_2_OCD49.CEL"	NA
+"499"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620892_EA11024_276024_HG-U133_PLUS_2_OCD48.CEL"	NA
+"500"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620891_EA11024_276023_HG-U133_PLUS_2_OCD47.CEL"	NA
+"501"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620890_EA11024_276022_HG-U133_PLUS_2_OCD46_N3.CEL"	NA
+"502"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620889_EA11024_276021_HG-U133_PLUS_2_OCD45_N3.CEL"	NA
+"503"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620888_EA11024_276020_HG-U133_PLUS_2_OCD44_N3.CEL"	NA
+"504"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620887_EA11024_276019_HG-U133_PLUS_2_OCD43.CEL"	NA
+"505"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620886_EA11024_276018_HG-U133_PLUS_2_OCD42.CEL"	NA
+"506"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620885_EA11024_276016_HG-U133_PLUS_2_OCD40.CEL"	NA
+"507"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620884_EA11024_276015_HG-U133_PLUS_2_OCD39.CEL"	NA
+"508"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620883_EA11024_276014_HG-U133_PLUS_2_OCD38.CEL"	NA
+"509"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620882_EA11024_276013_HG-U133_PLUS_2_OCD37_N3.CEL"	NA
+"510"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620881_EA11024_276012_HG-U133_PLUS_2_OCD36.CEL"	NA
+"511"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620880_EA11024_276011_HG-U133_PLUS_2_OCD35.CEL"	NA
+"512"	"E-GEOD-66360_sdrf.txt"	"Homo sapiens"	"CD146+ Circulating Endothelial Cells"	"GSM1620879_EA11024_276003_HG-U133_PLUS_2_OCD27_N3.CEL"	NA
+"573"	"E-GEOD-67664_sdrf.txt"	"Homo sapiens"	"liver sinusoidal endothelial cells"	"GSM1653166_sLSEC_L10.CEL"	NA
+"580"	"E-GEOD-68000_sdrf.txt"	"Homo sapiens"	"LSEC"	"GSM1673673_L10_LSEC.CEL"	NA
+"581"	"E-GEOD-68000_sdrf.txt"	"Homo sapiens"	"LSEC"	"GSM1673672_L8_LSEC.CEL"	NA
+"582"	"E-GEOD-68000_sdrf.txt"	"Homo sapiens"	"LSEC"	"GSM1673671_L4_LSEC.CEL"	NA
+"605"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920957_CiRA00010_EC_HuGene-1_0-st-v1_.CEL"	NA
+"606"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920956_CiRA00009_EC_HuGene-1_0-st-v1_.CEL"	NA
+"607"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920955_CiRA00008_EC_HuGene-1_0-st-v1_.CEL"	NA
+"608"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920954_CiRA00007_EC_HuGene-1_0-st-v1_.CEL"	NA
+"609"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920953_CiRA00006_EC__HuGene-1_0-st-v1_.v2.CEL"	NA
+"610"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920952_CiRA00005_EC_HuGene-1_0-st-v1_.CEL"	NA
+"611"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920951_CiRA00004_EC_HuGene-1_0-st-v1_.CEL"	NA
+"619"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920943_US94000320_253949424773_S01_GE1_1105_Oct12_1_2.txt"	NA
+"620"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920942_US94000320_253949424773_S01_GE1_1105_Oct12_1_3.txt"	NA
+"621"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920941_US94000320_253949424773_S01_GE1_1105_Oct12_1_4.txt"	NA
+"622"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920940_US94000320_253949424773_S01_GE1_1105_Oct12_2_1.txt"	NA
+"623"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920939_US94000320_253949424773_S01_GE1_1105_Oct12_2_2.txt"	NA
+"624"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920938_US94000320_253949424773_S01_GE1_1105_Oct12_2_3.txt"	NA
+"625"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920937_US94000320_253949424773_S01_GE1_1105_Oct12_2_4.txt"	NA
+"636"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920926_US94000320_253949420271_S01_GE1_107_Sep09_2_2.txt"	NA
+"637"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920925_US94000320_253949420271_S01_GE1_107_Sep09_2_3.txt"	NA
+"638"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920924_US94000320_253949420271_S01_GE1_107_Sep09_2_4.txt"	NA
+"639"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920923_US94000320_253949420270_S01_GE1_107_Sep09_1_1.txt"	NA
+"640"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920922_US94000320_253949420270_S01_GE1_107_Sep09_1_2.txt"	NA
+"641"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920921_US94000320_253949420270_S01_GE1_107_Sep09_1_3.txt"	NA
+"642"	"E-GEOD-74453_sdrf.txt"	"Homo sapiens"	"iPSC derived endothelial cells"	"GSM1920920_US94000320_253949420270_S01_GE1_107_Sep09_1_4.txt"	NA
+"643"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959745_sample_table.txt"	NA
+"644"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959744_sample_table.txt"	NA
+"645"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959743_sample_table.txt"	NA
+"646"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959742_sample_table.txt"	NA
+"647"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959741_sample_table.txt"	NA
+"648"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959740_sample_table.txt"	NA
+"649"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959739_sample_table.txt"	NA
+"650"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959738_sample_table.txt"	NA
+"651"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959737_sample_table.txt"	NA
+"652"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959736_sample_table.txt"	NA
+"653"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959735_sample_table.txt"	NA
+"654"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959734_sample_table.txt"	NA
+"655"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959733_sample_table.txt"	NA
+"656"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959732_sample_table.txt"	NA
+"657"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959731_sample_table.txt"	NA
+"658"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959730_sample_table.txt"	NA
+"659"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959729_sample_table.txt"	NA
+"660"	"E-GEOD-75588_sdrf.txt"	"Homo sapiens"	"Human Umbilical Vein Endothelial Cells (HUVEC)"	"GSM1959728_sample_table.txt"	NA
+"661"	"E-GEOD-78107_sdrf.txt"	"Homo sapiens"	"umbilical vein_human umbilical vein endothelial cell"	"GSM2067495_HUVEC_M4k4_siRNA_RachelR_HuGene10stv1_3.CEL"	"umbilical vein"
+"662"	"E-GEOD-78107_sdrf.txt"	"Homo sapiens"	"umbilical vein_human umbilical vein endothelial cell"	"GSM2067494_HUVEC_M4k4_siRNA_RachelR_HuGene10stv1_2.CEL"	"umbilical vein"
+"663"	"E-GEOD-78107_sdrf.txt"	"Homo sapiens"	"umbilical vein_human umbilical vein endothelial cell"	"GSM2067493_HUVEC_M4k4_siRNA_RachelR_HuGene10stv1_1.CEL"	"umbilical vein"
+"664"	"E-GEOD-78107_sdrf.txt"	"Homo sapiens"	"umbilical vein_human umbilical vein endothelial cell"	"GSM2067492_HUVEC_scr_siRNA_RachelR_HuGene10stv1_3.CEL"	"umbilical vein"
+"665"	"E-GEOD-78107_sdrf.txt"	"Homo sapiens"	"umbilical vein_human umbilical vein endothelial cell"	"GSM2067491_HUVEC_scr_siRNA_RachelR_HuGene10stv1_2.CEL"	"umbilical vein"
+"666"	"E-GEOD-78107_sdrf.txt"	"Homo sapiens"	"umbilical vein_human umbilical vein endothelial cell"	"GSM2067490_HUVEC_scr_siRNA_RachelR_HuGene10stv1_1.CEL"	"umbilical vein"
+"667"	"E-GEOD-84551_sdrf.txt"	"Homo sapiens"	"primary lymphatic endothelial cells"	"GSM2241755_HuLEC3.CEL"	NA
+"668"	"E-GEOD-84551_sdrf.txt"	"Homo sapiens"	"primary lymphatic endothelial cells"	"GSM2241754_HuLEC2.CEL"	NA
+"669"	"E-GEOD-84551_sdrf.txt"	"Homo sapiens"	"primary lymphatic endothelial cells"	"GSM2241753_HuLEC1.CEL"	NA
+"673"	"E-MEXP-3071_sdrf.txt"	"Homo sapiens"	"endothelial progenitor cell"	"BEN_EPC.CEL"	NA
+"675"	"E-MEXP-3071_sdrf.txt"	"Homo sapiens"	"endothelial progenitor cell"	"CUN-EPC.CEL"	NA
+"677"	"E-MEXP-3071_sdrf.txt"	"Homo sapiens"	"endothelial progenitor cell"	"SHEN_EPC.CEL"	NA
+"679"	"E-MEXP-3540_sdrf.txt"	"Homo sapiens"	"aorta_endothelial"	"TandC1.CEL"	"aorta"
+"680"	"E-MEXP-3540_sdrf.txt"	"Homo sapiens"	"aorta_endothelial"	"TandC2.CEL"	"aorta"
+"681"	"E-MEXP-3540_sdrf.txt"	"Homo sapiens"	"aorta_endothelial"	"TNF1.CEL"	"aorta"
+"682"	"E-MEXP-3540_sdrf.txt"	"Homo sapiens"	"aorta_endothelial"	"TNF2.CEL"	"aorta"
+"683"	"E-MEXP-3540_sdrf.txt"	"Homo sapiens"	"aorta_endothelial"	"UT1.CEL"	"aorta"
+"684"	"E-MEXP-3540_sdrf.txt"	"Homo sapiens"	"aorta_endothelial"	"UT2.CEL"	"aorta"
+"685"	"E-MEXP-3746_sdrf.txt"	"Homo sapiens"	"blood vessel endothelial cell"	"Cntl_1.CEL"	NA
+"686"	"E-MEXP-3746_sdrf.txt"	"Homo sapiens"	"blood vessel endothelial cell"	"Cntl_3.CEL"	NA
+"687"	"E-MEXP-3746_sdrf.txt"	"Homo sapiens"	"blood vessel endothelial cell"	"Ifn_1.CEL"	NA
+"688"	"E-MEXP-3746_sdrf.txt"	"Homo sapiens"	"blood vessel endothelial cell"	"Ifn_3.CEL"	NA
+"689"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Umbilical cord blood derived outgrowth endothelial"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"690"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Umbilical cord blood derived outgrowth endothelial"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"691"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Umbilical cord blood derived outgrowth endothelial"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"693"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Umbilical cord blood derived outgrowth endothelial"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"696"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Umbilical cord blood derived outgrowth endothelial"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"698"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Human Dermal Microvascular endothelial cells"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"699"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Human Dermal Microvascular endothelial cells"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"700"	"E-MTAB-1388_sdrf.txt"	"Homo sapiens"	"Umbilical cord blood derived outgrowth endothelial"	"EPC_senescence_raw_data_EBI_corrected.txt"	NA
+"709"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6696.cel"	NA
+"710"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6693.cel"	NA
+"711"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6692.cel"	NA
+"712"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6689.cel"	NA
+"713"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6685.cel"	NA
+"714"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6681.cel"	NA
+"715"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6679.cel"	NA
+"716"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6675.cel"	NA
+"717"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6674.cel"	NA
+"718"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6670.cel"	NA
+"719"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6666.cel"	NA
+"720"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6665.cel"	NA
+"721"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6662.cel"	NA
+"722"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6657.cel"	NA
+"723"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6655.cel"	NA
+"724"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6652.cel"	NA
+"725"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6649.cel"	NA
+"726"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6646.cel"	NA
+"727"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6643.cel"	NA
+"728"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6639.cel"	NA
+"729"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6638.cel"	NA
+"730"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6635.cel"	NA
+"731"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6632.cel"	NA
+"732"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6629.cel"	NA
+"733"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6624.cel"	NA
+"734"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6618.cel"	NA
+"735"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"blood outgrowth endothelial cell"	"NUID-0000-0097-6615.cel"	NA
+"736"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0100-8017.cel"	NA
+"737"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6609.cel"	NA
+"738"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6607.cel"	NA
+"739"	"E-MTAB-2495_sdrf.txt"	"Homo sapiens"	"pulmonary arterial endothelial cell"	"NUID-0000-0097-6604.cel"	NA
+"740"	"E-MTAB-2519_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"MMECs_siEphA3_rawdata.txt"	NA
+"741"	"E-MTAB-2519_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"MMECs_siEphA3_rawdata.txt"	NA
+"742"	"E-MTAB-2519_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"MMECs_siEphA3_rawdata.txt"	NA
+"743"	"E-MTAB-2519_sdrf.txt"	"Homo sapiens"	"endothelial cell"	"MMECs_siEphA3_rawdata.txt"	NA
+"744"	"E-MTAB-4023_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"Control_a.CEL"	NA
+"745"	"E-MTAB-4023_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"Control_b.CEL"	NA
+"746"	"E-MTAB-4023_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"Control_c.CEL"	NA
+"747"	"E-MTAB-4023_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"FOXO1_a.CEL"	NA
+"748"	"E-MTAB-4023_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"FOXO1_b.CEL"	NA
+"749"	"E-MTAB-4023_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"FOXO1_c.CEL"	NA
+"750"	"E-MTAB-4025_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"scr_corntrol_a.CEL"	NA
+"751"	"E-MTAB-4025_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"scr_corntrol_b.CEL"	NA
+"752"	"E-MTAB-4025_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"scr_corntrol_c.CEL"	NA
+"753"	"E-MTAB-4025_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"MYC_siRNA_a.CEL"	NA
+"754"	"E-MTAB-4025_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"MYC_siRNA_b.CEL"	NA
+"755"	"E-MTAB-4025_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"MYC_siRNA_c.CEL"	NA
+"756"	"E-MTAB-5467_sdrf.txt"	"Homo sapiens"	"uterus_endothelial cell"	"C_pool.CEL"	"uterus"
+"757"	"E-MTAB-5467_sdrf.txt"	"Homo sapiens"	"uterus_endothelial cell"	"T_pool.CEL"	"uterus"
+"758"	"E-MTAB-5592_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"HUVEC1_4h_HE_HuGene_1_0_st_v1.CEL"	NA
+"759"	"E-MTAB-5592_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"HUVEC2_4h_HE_HuGene_1_0_st_v1.CEL"	NA
+"760"	"E-MTAB-5592_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"HUVEC4_4h_FSAP_HuGene_1_0_st_v1.CEL"	NA
+"761"	"E-MTAB-5592_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"HUVEC5_4h_FSAP_HuGene_1_0_st_v1.CEL"	NA
+"762"	"E-MTAB-5592_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"HUVEC7_10h_FSAP_HuGene_1_0_st_v1.CEL"	NA
+"763"	"E-MTAB-5592_sdrf.txt"	"Homo sapiens"	"umbilical vein endothelial cell"	"HUVEC8_10h_FSAP_HuGene_1_0_st_v1.CEL"	NA
+"770"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_1A.CEL"	NA
+"771"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_1B.CEL"	NA
+"772"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_1C.CEL"	NA
+"773"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_1D.CEL"	NA
+"774"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_1E.CEL"	NA
+"775"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_1F.CEL"	NA
+"776"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_1G.CEL"	NA
+"777"	"E-MTAB-596_sdrf.txt"	"Homo sapiens"	"lymphatic endothelial cell"	"FOXC2_WT_2A.CEL"	NA
+"824"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0056_LLEC_ch_Araw.txt"	"skin"
+"825"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0056_LLEC_ch_Araw.txt"	"skin"
+"826"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0021_HLEC_ch_Araw.txt"	"skin"
+"827"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0021_HLEC_ch_Araw.txt"	"skin"
+"828"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0021_LLEC_ch_Araw.txt"	"skin"
+"829"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0021_LLEC_ch_Araw.txt"	"skin"
+"830"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0056_HLEC_ch_Araw.txt"	"skin"
+"831"	"E-TABM-227_sdrf.txt"	"Homo sapiens"	"skin_endothelial"	"ID0056_HLEC_ch_Araw.txt"	"skin"

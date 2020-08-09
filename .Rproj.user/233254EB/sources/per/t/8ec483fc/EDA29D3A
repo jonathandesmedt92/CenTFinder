@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553365680651.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2514544218",
+    "id" : "EDA29D3A",
+    "lastKnownWriteTime" : 1553418048,
+    "last_content_update" : 1553418048039,
+    "path" : "~/CenTFinder/R/pipeline.R",
+    "project_path" : "R/pipeline.R",
+    "properties" : {
+        "cursorPosition" : "46,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

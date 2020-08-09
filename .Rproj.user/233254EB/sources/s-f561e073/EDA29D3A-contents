@@ -1,0 +1,339 @@
+########################################################
+###   CenTFinder                                     ###
+###   Pipeline                                       ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+
+# Initialise
+test<-CenTFinder()
+
+# Get batch data
+
+# Asssemble sample platform annotation
+path = "/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/data.downloads/"
+
+test<-setPlatformAnnotations(test,path = path, platform_freq_cutoff = 0.00258)
+
+# Provide sample and group annotation (File_name,Cell_type)
+
+annot<-read.table("EC_annotation.txt",sep = "\t",header = T,stringsAsFactors = F)
+annot<-annot[annot$File_name%in%test@sample_annotation$File_name,]
+annot<-annot[,c("File_name","Cell_type")]
+annot<-annot[!duplicated(annot),]
+annot$Cell_type[annot$Cell_type=="aortic EC"]<-"aorta EC"
+
+test<-setSampleAnnotations(test,files = annot$File_name, celltypes = annot$Cell_type)
+
+# Provide annotation files if necessary
+
+huex10<-fread("/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Microarray_annotations/HuEx-1_0-st-v2.na36.hg19.transcript.csv")
+hugene10<-fread("/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Microarray_annotations/HuGene-1_0-st-v1.na36.hg19.transcript.csv")
+hugene20<-fread("/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/WGCNA/Microarray_annotations/HuGene-2_0-st-v1.na36.hg19.transcript.csv")
+
+huex10<-huex10[huex10$gene_assignment!="---",]
+huex10$gene_assignment<-trimws(sapply(strsplit(huex10$gene_assignment, split="//"),FUN=function(x){x[2]}))
+
+hugene10<-hugene10[hugene10$gene_assignment!="---",]
+hugene10$gene_assignment<-trimws(sapply(strsplit(hugene10$gene_assignment, split="//"),FUN=function(x){x[2]}))
+
+hugene20<-hugene20[hugene20$gene_assignment!="---",]
+hugene20$gene_assignment<-trimws(sapply(strsplit(hugene20$gene_assignment, split="//"),FUN=function(x){x[2]}))
+
+
+test<-loadProbeAnnotation(test,
+                          platform = "HuEx-1_0-st-v2",
+                          probes = huex10$transcript_cluster_id,
+                          symbols = huex10$gene_assignment)
+
+test<-loadProbeAnnotation(test,
+                          platform = "HuGene-1_0-st-v1",
+                          probes = hugene10$transcript_cluster_id,
+                          symbols = hugene10$gene_assignment)
+
+test<-loadProbeAnnotation(test,
+                          platform = "HuGene-2_0-st",
+                          probes = hugene20$transcript_cluster_id,
+                          symbols = hugene20$gene_assignment)
+
+# Analyse microarrays
+
+test<-analyseMicroarrays(test, platforms_keep = "HG-U219")
+
+saveRDS(test,file="test")
+test<-readRDS("test")
+# Load TFs of species
+humantfs<-as.character(read.table("allhumantfs2.txt",sep = "\t")[,1])
+
+# Filter genes
+
+test<-filterGenes(test,tfs=humantfs, TF_range_cutoff=1, max_genes=9000)
+
+# Apply WGCNA
+
+test<-applyWGCNA(CenTFinderObject=test, network_type="signed")
+
+saveRDS(test,file="test")
+test<-readRDS("test")
+
+# Perform cluster-wise analysis: GO, KEGG, PCA, heatmap, RCisTarget, secondary RCisTarget
+
+motif_db_path<-"/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/SCENIC/databases/hg19-tss-centered-10kb-7species.mc9nr.feather"
+
+test<-analyseClusters(CenTFinderObject=test, GO=T, KEGG=T, PCA=T, RCisTarget=T,species="Homo sapiens", cores=10, motif_db_path=motif_db_path)
+
+saveRDS(test,file="test")
+test<-readRDS("test")
+
+# Optional: Marker RCisTarget
+
+test<-addMarkers(CenTFinderObject=test,
+                 markers=c("FCGR2B","PECAM1","STAB1","STAB2","LYVE1","CLEC4G","CLEC4M"),
+                 cores=10,
+                 motif_db_path=motif_db_path)
+
+
+# Optional: Attach DE
+
+rnaseq<-read.table("/mnt/nfs/data/Catherine_Lab/Jonathan_De_Smedt/R_projects/Analyses/Celltype_analyses/Liver_sinusoidal_endothelial_cells/RNAseq/Single-end/Results/diff_genes_LSEC_vs_ETV2.txt",stringsAsFactors = F,header = T)
+rnaseq<-rnaseq[,c("Gene","log2FoldChange","padj")]
+names(rnaseq)<-c("Gene","logFC","Pvalue")
+rnaseq<-rnaseq[!is.na(rnaseq$Gene),]
+
+DEset(test)<-rnaseq
+
+saveRDS(test,file="test")
+test<-readRDS("test")
+
+# Optional: Attach ChipSeq
+
+
+
+# Integrate analyses
+
+integrateAnalyses<-function(CenTFinderObject){
+  # Generate summary table
+
+  # Score each sample for each module with ssGSEA
+
+  # Score each sample for each regulon with ssGSEA and/or AUCell
+
+  # Generate heatmap revealing cluster activity
+
+
+}
+
+
+generateSummary<-function(CenTFinderObject, tfs, kME_cutoff=0.7){
+  # Extract TF kMEs
+  tf_kMEs<-CenTFinderObject@kMEs[rownames(CenTFinderObject@kMEs)%in%tfs,]
+  # Reshape
+  tf_kMEs$TF<-rownames(tf_kMEs)
+  tf_kMEs<-gather(tf_kMEs, key = "Cluster",value = "kME",1:(ncol(tf_kMEs)-1))
+  tf_kMEs$Cluster<-gsub(tf_kMEs$Cluster, pattern = "kME", replacement = "")
+  # Keep only TFs for which |kME|>kME_cutoff
+  tf_kMEs<-tf_kMEs[tf_kMEs$kME>abs(kME_cutoff),]
+  # Filter motif enrichment table
+  motifs<-CenTFinderObject@motif_enrichment[CenTFinderObject@motif_enrichment$TF_highConf!="",]
+  motifs$TF<-sapply(strsplit(motifs$TF_highConf,split=" |;"),FUN=function(x){x[1]})
+  names(motifs)[1]<-"Cluster"
+  # Merge WGCNA and RCisTarget
+  WR_merged<-merge(tf_kMEs,motifs,by=c("TF","Cluster"),all=T)
+  # Check for additional DE
+  de_tfs<-data.frame(TF=character(),
+                     logFC=numeric(),
+                     Pvalue=numeric(),
+                     stringsAsFactors = F)
+  if(dim(CenTFinderObject@DE)[1]!=0){
+    de_tfs<-CenTFinderObject@DE[CenTFinderObject@DE$Gene%in%tfs,]
+    names(de_tfs)[1]<-"TF"
+  }
+  # Check for additional ChipSeq
+
+  # Merge
+  WRDC_merged<-Reduce(function(x,y)merge(x,y,by="TF",all=T), list(WR_merged,de_tfs))
+  # Assign class to TFs
+  maxVal<-sum(sapply(WRDC_merged[,c("kME","NES","logFC")],FUN=function(x)any(!is.na(x))))
+  WRDC_merged$Class<-apply(WRDC_merged[,names(sapply(WRDC_merged[,c("kME","NES","logFC")],FUN=function(x)any(!is.na(x))))], 1, FUN = function(x){
+    res<-sum(is.na(x))+1
+    return(res)
+  })
+  # Assemble regulons per class and per cluster
+  regulons<-data.frame(TF=character(),
+                       Target = character(),
+                       Cluster = character(),
+                       kME = numeric(),
+                       NES = numeric(),
+                       logFC = numeric(),
+                       Class = numeric(),
+                       stringsAsFactors = F)
+  for(i in 1:nrow(WRDC_merged)){
+    tmp<-data.frame(TF=WRDC_merged$TF[i],
+                    Target=strsplit(WRDC_merged$enrichedGenes[i],split=";")[[1]],
+                    Cluster=WRDC_merged$Cluster[i],
+                    kME = WRDC_merged$kME[i],
+                    NES = WRDC_merged$NES[i],
+                    logFC = WRDC_merged$logFC[i],
+                    Class = WRDC_merged$Class[i],
+                    stringsAsFactors = F)
+    regulons<-bind_rows(regulons,tmp)
+  }
+  regulons<-regulons[!duplicated(regulons),]
+  # Filter regulons for differentially expressed targets
+  regulons_de<-merge(regulons, CenTFinderObject@DE, by.x="Target",by.y="Gene",all=F,suffixes=c("_TF","_Target"))
+  regulons_de<-regulons_de%>%
+    group_by(Target,TF,Cluster,kME,logFC_TF,Class,logFC_Target,Pvalue)%>%
+    summarise(NES =  max(NES))
+
+  freqt<-data.frame(table(regulons_de[,c("TF","Cluster")]),stringsAsFactors = F)
+  freqt<-merge(freqt,regulons_de[,c("TF","Class")],by="TF",all=F)
+  freqt<-freqt[!duplicated(freqt),]
+  freqt<-freqt[freqt$Freq>0,]
+  freqt<-freqt%>%
+    group_by(TF)%>%
+    summarise(Cluster = paste(Cluster, collapse = "; "),
+              Freq = sum(Freq),
+              Class = min(Class))
+  freqt<-freqt[freqt$Cluster!="markers",]
+}
+
+
+
+# Scoring of modules with GSVA
+
+
+
+gset.idx.list<-list()
+
+modules<-unique(test@gene_cluster_annotation$Cluster_color)
+
+for(module in modules){
+  gset.idx.list[[module]]<-as.character(test@gene_cluster_annotation[test@gene_cluster_annotation$Cluster_color==module,"Gene"])
+}
+
+ssgsea<-gsva(expr = test@filtered_data, gset.idx.list = gset.idx.list, method = "ssgsea")
+gsva_res<-gsva(expr = test@filtered_data, gset.idx.list = gset.idx.list, method = "gsva")
+
+ssgsea_t<-data.frame(ssgsea,stringsAsFactors = F)
+ssgsea_t$Module<-rownames(ssgsea_t)
+ssgsea_t<-gather(data.frame(ssgsea_t,stringsAsFactors = F),key="Cell",value = "ssgsea",1:(ncol(ssgsea_t)-1))
+ssgsea_t$Cell<-gsub("^\\d+|\\d+$", "", ssgsea_t$Cell)
+ssgsea_t<-ssgsea_t%>%
+  group_by(Cell,Module)%>%
+  summarise(Avgssgsea = mean(ssgsea))
+ssgsea_t<-spread(ssgsea_t, key = "Module",value = "Avgssgsea")
+
+
+freqt_filtered<-freqt[freqt$Freq>500,]
+
+important_clusters<-t(ssgsea_t[ssgsea_t$Cell=="LSEC",-1])
+important_clusters<-names(important_clusters[important_clusters[,1]>0,])
+
+
+
+gsva_t<-data.frame(gsva_res,stringsAsFactors = F)
+gsva_t$Module<-rownames(gsva_t)
+gsva_t<-gather(data.frame(gsva_t,stringsAsFactors = F),key="Cell",value = "gsva",1:(ncol(gsva_t)-1))
+gsva_t$Cell<-gsub("^\\d+|\\d+$", "", gsva_t$Cell)
+gsva_t<-gsva_t%>%
+  group_by(Cell,Module)%>%
+  summarise(Avggsva = mean(gsva))
+gsva_t<-spread(gsva_t, key = "Module",value = "Avggsva")
+
+
+freqt_filtered<-freqt[freqt$Freq>500,]
+
+important_clusters<-t(ssgsea_t[ssgsea_t$Cell=="LSEC",-1])
+important_clusters<-names(important_clusters[important_clusters[,1]>0,])
+
+gsva_t<-as.matrix(gsva_t)
+rownames(gsva_t)<-gsva_t[,"Cell"]
+gsva_t<-gsva_t[,-1]
+gsva_mat<-matrix(as.numeric(gsva_t), ncol = ncol(gsva_t),nrow=nrow(gsva_t),dimnames=list(rownames(gsva_t), colnames(gsva_t)))
+
+heatmap.2(gsva_mat, col = bluered, margins = c(8,12),cexRow = 0.7)
+
+
+# Scoring of regulonsµ
+
+
+important_regulons<-WRDC_merged[WRDC_merged$Cluster%in%c("salmon","white"),]
+
+important_regulons_net<-important_regulons[,c("TF","Cluster","Class","enrichedGenes")]
+important_regulons_net<-important_regulons_net%>%
+  group_by(TF, Cluster)%>%
+  summarise(Class = min(Class),
+            Targets = paste(enrichedGenes, collapse = ";"))
+important_regulons_net<-important_regulons_net[important_regulons_net$Targets!="NA",]
+
+
+regulon_gene_list<-list()
+important_regulons_net$regulon<-paste(important_regulons_net$TF,important_regulons_net$Cluster,sep="-")
+
+for(regulon in important_regulons_net$regulon){
+  genes<-strsplit(important_regulons_net$Targets[important_regulons_net$regulon==regulon],split=";")[[1]]
+  genes<-unique(append(important_regulons_net$TF[important_regulons_net$regulon==regulon],genes))
+  regulon_gene_list[[regulon]]<-genes
+}
+
+
+
+regulon_gsva_res<-gsva(expr = test@filtered_data, gset.idx.list = regulon_gene_list, method = "gsva")
+
+regulon_gsva_t<-data.frame(regulon_gsva_res,stringsAsFactors = F)
+regulon_gsva_t$Module<-rownames(regulon_gsva_t)
+regulon_gsva_t<-gather(data.frame(regulon_gsva_t,stringsAsFactors = F),key="Cell",value = "regulon_gsva",1:(ncol(regulon_gsva_t)-1))
+regulon_gsva_t$Cell<-gsub("^\\d+|\\d+$", "", regulon_gsva_t$Cell)
+regulon_gsva_t<-regulon_gsva_t%>%
+  group_by(Cell,Module)%>%
+  summarise(Avgregulon_gsva = mean(regulon_gsva))
+regulon_gsva_t<-spread(regulon_gsva_t, key = "Module",value = "Avgregulon_gsva")
+
+
+
+regulon_gsva_t<-as.matrix(regulon_gsva_t)
+rownames(regulon_gsva_t)<-regulon_gsva_t[,"Cell"]
+regulon_gsva_t<-regulon_gsva_t[,-1]
+regulon_gsva_mat<-matrix(as.numeric(regulon_gsva_t), ncol = ncol(regulon_gsva_t),nrow=nrow(regulon_gsva_t),dimnames=list(rownames(regulon_gsva_t), colnames(regulon_gsva_t)))
+
+heatmap.2(regulon_gsva_mat, col = bluered, margins = c(8,12),cexRow = 0.7)
+
+
+
+lsec_regulons<-data.frame(TF=character(),
+                     Target = character(),
+                     Cluster = character(),
+                     Class = numeric(),
+                     stringsAsFactors = F)
+for(i in 1:nrow(important_regulons_net)){
+  tmp<-data.frame(TF=important_regulons_net$TF[i],
+                  Target=strsplit(important_regulons_net$Targets[i],split=";")[[1]],
+                  Cluster=important_regulons_net$Cluster[i],
+                  Class = important_regulons_net$Class[i],
+                  stringsAsFactors = F)
+  lsec_regulons<-bind_rows(lsec_regulons,tmp)
+}
+lsec_regulons<-lsec_regulons[!duplicated(lsec_regulons),]
+
+
+lsec_regulons_stat<-lsec_regulons%>%
+  group_by(TF)%>%
+  summarise(Nr_targets = length(Target))
+
+
+lsec_regulons<-merge(lsec_regulons,test@DE,by.x="Target",by.y="Gene",all=F)
+
+filt_targets<-list()
+for(i in 1:length(unique(lsec_regulons$TF))){
+  filt_targets[[i]]<-lsec_regulons[lsec_regulons$TF==unique(lsec_regulons$TF)[i],]
+  filt_targets[[i]]<-filt_targets[[i]][order(filt_targets[[i]]$logFC, decreasing = T),]
+  filt_targets[[i]]<-filt_targets[[i]][1:min(nrow(filt_targets[[i]]),10),]
+}
+
+filt_reg<-bind_rows(filt_targets)
+filt_reg<-merge(filt_reg,lsec_regulons_stat,by="TF",all=T)
+
+write.table(filt_reg,"cyt_lsec.txt",sep = "\t")
+
+

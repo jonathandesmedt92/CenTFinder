@@ -1,0 +1,98 @@
+########################################################
+###   CenTFinder                                     ###
+###   Function definitions                           ###
+###   version 21032018                               ###
+###   Author: Jonathan De Smedt                      ###
+########################################################
+
+# Function to get info about microarray platforms used, and subsequently to filter
+
+get_microarrays_info<-function(path, platform_freq_cutoff=0.00258){
+  # Get file names and extract platform information
+  filenames <- list.celfiles(path=path)
+  f<-paste(path,filenames,sep = "")
+  f<-data.frame(sapply(f, function(x) read.celfile.header(x)$cdfName),stringsAsFactors = F)
+  f$File_name<-rownames(f)
+  names(f)<-c("Platform","Path")
+  f$File_name<-filenames
+  f<-f%>%
+    group_by(Platform)%>%
+    mutate(Frequency = length(File_name))
+  # Remove files belonging to infrequent platforms (<0.05%)
+  f<-f[f$Frequency>ceiling(nrow(f)*platform_freq_cutoff),]
+  # Return
+  return(f)
+}
+
+
+
+annotate_platform<-function(CenTFinderObject,platform){
+  if(platform%in%c("HG-U133_Plus_2","NuGO_Hs1a520180","HG-U219","HT_HG-U133A")){
+    db<-switch(platform,
+               "HG-U133_Plus_2" = list(hgu133plus2ACCNUM,hgu133plus2SYMBOL,hgu133plus2GENENAME),
+               "NuGO_Hs1a520180"=list(nugohs1a520180ACCNUM,nugohs1a520180SYMBOL,nugohs1a520180SYMBOL),
+               "HG-U219"=list(hgu219ACCNUM,hgu219SYMBOL,hgu219SYMBOL),
+               "HT_HG-U133A"=list(hgu133aACCNUM,hgu133aSYMBOL,hgu133aSYMBOL)
+    )
+    annot<-data.frame(SYMBOL=sapply(contents(db[[2]]), paste, collapse=", "),
+                      ACCNUM =0)
+    annot$ACCNUM<-rownames(annot)
+  } else if(platform%in%names(CenTFinderObject@probe_annotations)){
+    annot<-CenTFinderObject@probe_annotations[[platform]]
+  } else {
+    annot<-NULL
+  }
+  return(annot)
+}
+
+gm_mean<-function(x, na.rm=TRUE){
+  exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+}
+
+analyse_microarray<-function(CenTFinderObject,arrays, platform){
+  # Read in the arrays
+  eset<-read.celfiles(arrays)
+  # RMA normalise
+  affyRaw<-rma(eset)
+  # Extract expression matrix
+  data<-data.frame(exprs(affyRaw),check.names = F)
+  # Create probe annotation
+  annot<-annotate_platform(CenTFinderObject,platform)
+  # Merge annotation and data
+  data <- merge(annot, data, by.x="ACCNUM", by.y=0, all=F)
+  #Collapse probes to genes by means of geometric mean
+  data<-aggregate(.~data$SYMBOL,data=data[,-c(1:2)],FUN=gm_mean,na.rm=T)
+  data<-data[data$`data$SYMBOL`!="NA",]
+  rownames(data)<-data$`data$SYMBOL`
+  data$`data$SYMBOL`<-NULL
+  return(data)
+}
+
+
+mp_analyse_microarray<-function(CenTFinderObject, keep_genes=0.7){
+  # Loop over the different platforms and analyse per platform
+  platforms<-CenTFinderObject@platforms[CenTFinderObject@platforms$Annotation!="No annotation found.","Platform"]
+  annotation<-CenTFinderObject@sample_annotation
+  data<-list()
+  for(i in seq_along(platforms)){
+    data[[i]]<-analyse_microarray(arrays = as.character(as.matrix(annotation[annotation$Platform==platforms[i],"Path"])),
+                                  platform = platforms[i],
+                                  CenTFinderObject = CenTFinderObject)
+  }
+  # Weigh number of genes and number of arrays
+
+  # Merge data
+  data2<-lapply(data,FUN=function(x){x$SYMBOL<-row.names(x)})
+  data2<-Reduce(function(x,y) merge(x=x, y=y, by="SYMBOL", all=F),data2)
+  # Adjust batch effects with Combat
+  if(length(platforms)>2){
+    data<-ComBat(data, batch=annotation$Platform)
+  }
+  # Return
+  return(data)
+}
+
+
+
+
+
