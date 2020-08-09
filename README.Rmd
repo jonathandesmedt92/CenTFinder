@@ -4,12 +4,10 @@ date: "4/15/2020"
 output: 
   html_document: default
   md_document: default
+    css: "style.css"
 ---
 
-<style>
-body {
-text-align: justify}
-</style>
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
